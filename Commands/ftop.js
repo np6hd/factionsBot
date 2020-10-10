@@ -38,14 +38,13 @@ module.exports = {
         let facObj = database.findFaction(splitText[1]);
         if (facObj.value() != undefined) {
           let tempChange =
-            (currentFtop.find((faction) => faction.factionName == splitText[1])
-              .value -
-              facObj.get("value").value());
-          if(tempChange >= 0) {
+            currentFtop.find((faction) => faction.factionName == splitText[1])
+              .value - facObj.get("value").value();
+          if (tempChange >= 0) {
             tempChange = tempChange.toLocaleString();
             change += "+$" + tempChange + "\n";
           } else {
-            tempChange = Math.abs(tempChange)
+            tempChange = Math.abs(tempChange);
             tempChange = tempChange.toLocaleString();
             change += "-$" + tempChange + "\n";
           }

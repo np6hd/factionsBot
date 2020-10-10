@@ -6,6 +6,8 @@ const { options, wait } = require("./Utils/config");
 const database = require("./Utils/database");
 const intervals = require("./Intervals/intervals");
 const { get } = require("lodash");
+const { isVerified } = require("./Utils/database");
+const { verify } = require("crypto");
 
 if (!database.isInitalized) {
   database.createDatabase();
@@ -34,7 +36,7 @@ let serverChat = [];
 let commandsData = [];
 let commandsExecuted = false;
 
-const bot = mineflayer.createBot(options);
+var bot = mineflayer.createBot(options);
 bindEvents(bot);
 
 function bindEvents(bot) {
@@ -74,12 +76,13 @@ function bindEvents(bot) {
       if (clientCommand.type != "ingame") return;
       if (clientCommand.checkArgs && !arguments) return;
 
+      if (clientCommand.name != "token" && !database.isUserVerified(username))
+        return;
+
       if (database.isShieldOn() && clientCommand.usesShield) {
         bot.chat("Error: Shield is enabled.");
         return;
       }
-      if (clientCommand.name != "token" && !database.isUserVerified(username))
-        return;
       let embed = new discord.MessageEmbed();
       embed
         .setTimestamp()
@@ -150,13 +153,45 @@ client.on("message", (message) => {
     .shift()
     .toLowerCase();
 
+  let embed = new discord.MessageEmbed();
+  embed
+    .setTimestamp()
+    .setFooter(message.author.tag, message.author.displayAvatarURL());
+
+  if (command == "restart")
+    if (message.member.hasPermission("ADMINISTRATOR")) {
+      embed
+        .setColor("#A62019")
+        .setTitle("Restart")
+        .setDescription("⚠️ Restarting bot...");
+      message.channel.send(embed);
+      restart();
+    } else {
+      embed
+        .setColor("#7a2f8f")
+        .setTitle("Restart")
+        .setDescription(
+          embedWrapper +
+            "❌ You do not have permissions to run this command" +
+            embedWrapper
+        );
+      message.channel.send(embed);
+      return;
+    }
+
   if (!client.commands.has(command)) return;
 
   const arguments = message.content.split(" ").splice(1).join(" ");
 
   try {
     const clientCommand = client.commands.get(command);
+
     if (clientCommand.type != "discord") return;
+
+    if (clientCommand.name != "verify" && !database.isVerified(message.author.tag)) {
+      return;
+    }
+
     if (clientCommand.checkArgs && !arguments) {
       return message.reply(
         "Arguments were not provided. Please retry with arguments."
@@ -172,17 +207,6 @@ client.on("message", (message) => {
       });
     }
 
-    let embed = new discord.MessageEmbed();
-    embed
-      .setTimestamp()
-      .setFooter(message.author.tag, message.author.displayAvatarURL());
-    // if (clientCommand.name == "restart") {
-    //   embed.setColor("#A62019").setDescription("Restarting bot...");
-    //   message.channel.send(embed);
-    //   restart();
-    //   return;
-    // }
-
     clientCommand.execute(bot, database, arguments, options, embed, message);
     commandsExecuted = true;
 
@@ -197,7 +221,6 @@ client.on("message", (message) => {
     });
   } catch (error) {
     console.error(error);
-    message.reply("No such command found");
   }
 });
 
@@ -205,7 +228,7 @@ client.on("message", (message) => {
 
 setInterval(() => {
   const channel = client.channels.cache.find(
-    (channel) => channel.name === "serverchat"
+    (channel) => channel.id === database.getChannelID("serverchat")
   );
   if (channel != undefined) {
     if (serverChat.length < 1 || serverChat == undefined) return;
@@ -217,11 +240,11 @@ setInterval(() => {
 setInterval(() => {
   if (!database.isShieldOn()) {
     const channel = client.channels.cache.find(
-      (channel) => channel.name === "wallchecks"
+      (channel) => channel.id === database.getChannelID("wallchecks")
     );
     if (channel != undefined) {
-      let embed = new discord.MessageEmbed()
-      embed.setTimestamp()
+      let embed = new discord.MessageEmbed();
+      embed.setTimestamp();
       intervals.wallCheckIntervals(bot, database, options, channel, embed);
     }
   }
@@ -230,11 +253,11 @@ setInterval(() => {
 setInterval(() => {
   if (!database.isShieldOn()) {
     const channel = client.channels.cache.find(
-      (channel) => channel.name === "wallchecks"
+      (channel) => channel.id === database.getChannelID("bufferchecks")
     );
     if (channel != undefined) {
-      let embed = new discord.MessageEmbed()
-      embed.setTimestamp()
+      let embed = new discord.MessageEmbed();
+      embed.setTimestamp();
       intervals.bufferCheckIntervals(bot, database, options, channel, embed);
     }
   }
@@ -258,6 +281,8 @@ const end = () => {
 
 const restart = () => {
   wait(10000).then(() => {
+    bot.quit("Restarting...");
+    console.log("Bot is restarting...");
     bot = mineflayer.createBot(options);
     database.resetTempUsers();
     bindEvents(bot);

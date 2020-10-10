@@ -8,12 +8,12 @@ module.exports = {
   sendEmbed: false,
   usesShield: true,
   execute(bot, database, arguments, options, client, username, embed) {
-    const wallCheckChannel = client.channels.cache.find(
-      (channel) => channel.name === "wallchecks"
+    const bufferCheckChannel = client.channels.cache.find(
+      (channel) => channel.id === database.getChannelID("bufferchecks")
     );
 
-    if (wallCheckChannel == undefined) {
-      bot.chat("Error: Wall check channel not setup");
+    if (bufferCheckChannel == undefined) {
+      bot.chat("Error: Buffer check channel not setup");
       return;
     }
 
@@ -38,7 +38,7 @@ module.exports = {
       description += bold + username + bold + " checks: 1\n";
 
       embed.setDescription(description);
-      wallCheckChannel.send(embed);
+      bufferCheckChannel.send(embed);
     } else {
       let coolDown = Math.abs(
         (currentTime - userWallObject.get("lastBufferChecked").value()) / 1000
@@ -63,7 +63,7 @@ module.exports = {
           userWallObject.get("bufferChecks").value() +
           "\n";
         embed.setDescription(description);
-        wallCheckChannel.send(embed);
+        bufferCheckChannel.send(embed);
       } else {
         coolDown = 60 - coolDown;
         bot.chat(

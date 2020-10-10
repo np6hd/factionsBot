@@ -25,12 +25,12 @@ module.exports = {
       .setTitle("Wall Check Top | " + options.serverIP)
       .addFields(
         {
-          name: bold + "Top Wall Checkers" + bold,
+          name: "Top Wall Checkers",
           value: users,
           inline: true,
         },
         {
-          name: bold + "Wall Checks" + bold,
+          name: "Wall Checks",
           value: wallChecks,
           inline: true,
         }

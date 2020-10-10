@@ -8,9 +8,9 @@ module.exports = {
   sendEmbed: false,
   usesShield: false,
   execute(bot, database, arguments, options, embed, message) {
-    if(message.channel.name != "verify") {
-      message.reply("Type this in the verify channel.")
-      return
+    if (message.channel.name != this.name) {
+      message.reply("Type this in the verify channel.");
+      return;
     }
 
     if (database.isVerified(message.author.tag)) {
@@ -29,10 +29,10 @@ module.exports = {
       .setColor("#0099ff")
       .setTitle("Verifying Token")
       .setDescription(
-        embedWrapper +
-          "Copy and paste the following command in game to become a verified user: " +
-          "\__.token " +
-          newToken + "\__" + 
+        "**Copy and paste the following command in-game to become a verified user:** " +
+          embedWrapper +
+          ".token " +
+          newToken +
           embedWrapper
       );
     message.author.send(embed);

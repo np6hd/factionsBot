@@ -18,6 +18,16 @@ module.exports = {
       },
       temporaryUser: [],
       prevFtop: [],
+      channels: {
+        announcements: "",
+        weewoo: "",
+        wallchecks: "",
+        bufferchecks: "",
+        serverchat: "",
+        ftop: "",
+        flist: "",
+        verify: "",
+      },
       shield: true,
       totalUsers: 0,
     }).write();
@@ -37,6 +47,33 @@ module.exports = {
       })
       .write();
     db.update("totalUsers", (n) => (n += 1)).write();
+  },
+  isInitalized: db.has("totalUsers").value(),
+  isVerified(tag) {
+    var found = "";
+    this.getDiscordUserObject(tag).value() != undefined
+      ? (found = true)
+      : (found = false);
+    return found;
+  },
+  isUserVerified(username) {
+    var found = "";
+    this.getUserObject(username).value() != undefined
+      ? (found = true)
+      : (found = false);
+    return found;
+  },
+  isShieldOn() {
+    return db.get("shield").value();
+  },
+  setChannel(channelName, channelID) {
+    db.update(
+      `channels.${channelName}`,
+      (channel) => (channel = channelID)
+    ).write();
+  },
+  getChannelID(channelName) {
+    return db.get(`channels.${channelName}`).value();
   },
   getAllUsersObject() {
     return db.get("users");
@@ -115,17 +152,5 @@ module.exports = {
   },
   findFaction(factionName) {
     return db.get("prevFtop").find({ factionName: factionName });
-  },
-  isInitalized: db.has("totalUsers").value(),
-  isVerified(tag) {
-    if (this.getDiscordUserObject(tag).value() != undefined) return true;
-    else false;
-  },
-  isUserVerified(username) {
-    if (this.getUserObject(username).value() != undefined) return true;
-    else false;
-  },
-  isShieldOn() {
-    return db.get("shield").value();
   },
 };

@@ -9,7 +9,7 @@ module.exports = {
   usesShield: true,
   execute(bot, database, arguments, options, client, username, embed) {
     const wallCheckChannel = client.channels.cache.find(
-      (channel) => channel.name === "wallchecks"
+      (channel) => channel.id === database.getChannelID("wallchecks")
     );
 
     if (wallCheckChannel == undefined) {
@@ -17,7 +17,7 @@ module.exports = {
       return;
     }
 
-    embed.setColor("#00D166").setTitle("Wall Check")
+    embed.setColor("#00D166").setTitle("Wall Check");
 
     let today = new Date();
     let currentTime = today.getTime();

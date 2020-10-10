@@ -13,12 +13,48 @@ const options = {
   joinCommandFrequency: userInfo.joinCommandFrequency,
   serverIP: userInfo.serverIP,
   prefix: userInfo.prefix,
-  url: "https://crafatar.com/avatars/"
+  url: "https://crafatar.com/avatars/",
 };
+
+const setChannelArgs = [
+  {
+    name: "announcements",
+    description: "",
+  },
+  {
+    name: "weewoo",
+    description: "",
+  },
+  {
+    name: "wallchecks",
+    description: "",
+  },
+  {
+    name: "bufferchecks",
+    description: "",
+  },
+  {
+    name: "serverchat",
+    description: "",
+  },
+  {
+    name: "ftop",
+    description: "",
+  },
+  {
+    name: "flist",
+    description: "",
+  },
+  {
+    name: "verify",
+    description: "",
+  },
+];
 
 const wait = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
 module.exports = {
   options,
   wait,
+  setChannelArgs,
 };

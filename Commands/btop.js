@@ -26,12 +26,12 @@ module.exports = {
       .setTitle("Buffer Check Top | " + options.serverIP)
       .addFields(
         {
-          name: bold + "Top Buffer Checkers" + bold,
+          name: "Top Buffer Checkers",
           value: users,
           inline: true,
         },
         {
-          name: bold + "Buffer Checks" + bold,
+          name: "Buffer Checks",
           value: bufferChecks,
           inline: true,
         }
