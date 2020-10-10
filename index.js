@@ -5,7 +5,7 @@ const fs = require("fs");
 const { options, wait } = require("./Utils/config");
 const database = require("./Utils/database");
 const intervals = require("./Intervals/intervals");
-const { rest } = require("lodash");
+const { get } = require("lodash");
 
 if (!database.isInitalized) {
   database.createDatabase();
@@ -29,6 +29,7 @@ const prefix = options.prefix;
 const minuteToMS = 60 * 1000;
 const usedCommand = new Set();
 const bold = "**";
+const embedWrapper = "```";
 let serverChat = [];
 let commandsData = [];
 let commandsExecuted = false;
@@ -79,8 +80,10 @@ function bindEvents(bot) {
       }
       if (clientCommand.name != "token" && !database.isUserVerified(username))
         return;
-
       let embed = new discord.MessageEmbed();
+      embed
+        .setTimestamp()
+        .setThumbnail(options.url + bot.players[username].uuid);
 
       clientCommand.execute(
         bot,
@@ -173,7 +176,6 @@ client.on("message", (message) => {
     embed
       .setTimestamp()
       .setFooter(message.author.tag, message.author.displayAvatarURL());
-
     // if (clientCommand.name == "restart") {
     //   embed.setColor("#A62019").setDescription("Restarting bot...");
     //   message.channel.send(embed);
@@ -188,7 +190,7 @@ client.on("message", (message) => {
       if (clientCommand.usesChat) {
         if (clientCommand.name == "ftop")
           clientCommand.parseChat(commandsData, embed, database);
-        else embed.setDescription(bold + commandsData.join("\n") + bold);
+        else embed.setDescription(commandsData.join("\n"));
       }
       if (clientCommand.sendEmbed) message.channel.send(embed);
       clear();
@@ -202,26 +204,44 @@ client.on("message", (message) => {
 // collect multiple messages in game and then sends it to the channel, every 3 seconds
 
 setInterval(() => {
-  if (!database.isChannelSetup()) {
-    serverChat = [];
-    return;
+  const channel = client.channels.cache.find(
+    (channel) => channel.name === "serverchat"
+  );
+  if (channel != undefined) {
+    if (serverChat.length < 1 || serverChat == undefined) return;
+    channel.send(embedWrapper + serverChat.join("\n") + embedWrapper);
   }
-  intervals.serverChatIntervals(client, serverChat);
   serverChat = [];
 }, 3000);
 
 setInterval(() => {
-  if (!database.isShieldOn())
-    intervals.wallCheckIntervals(bot, database, options);
+  if (!database.isShieldOn()) {
+    const channel = client.channels.cache.find(
+      (channel) => channel.name === "wallchecks"
+    );
+    if (channel != undefined) {
+      let embed = new discord.MessageEmbed()
+      embed.setTimestamp()
+      intervals.wallCheckIntervals(bot, database, options, channel, embed);
+    }
+  }
 }, options.wallCheckFrequency * minuteToMS);
 
 setInterval(() => {
-  if (!database.isShieldOn())
-    intervals.bufferCheckIntervals(bot, database, options);
+  if (!database.isShieldOn()) {
+    const channel = client.channels.cache.find(
+      (channel) => channel.name === "wallchecks"
+    );
+    if (channel != undefined) {
+      let embed = new discord.MessageEmbed()
+      embed.setTimestamp()
+      intervals.bufferCheckIntervals(bot, database, options, channel, embed);
+    }
+  }
 }, options.bufferCheckFrequency * minuteToMS + 5000);
 
 setInterval(() => {
-  intervals.joinCommandIntervals(bot, options);
+  bot.chat(options.joinCommand);
 }, options.joinCommandFrequency * minuteToMS);
 
 const clear = () => {

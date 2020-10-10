@@ -18,8 +18,7 @@ module.exports = {
       },
       temporaryUser: [],
       prevFtop: [],
-      shield: false,
-      channelsPopulated: false,
+      shield: true,
       totalUsers: 0,
     }).write();
     console.log("Default Database Created");
@@ -116,12 +115,6 @@ module.exports = {
   },
   findFaction(factionName) {
     return db.get("prevFtop").find({ factionName: factionName });
-  },
-  isChannelSetup() {
-    return db.get("channelsPopulated").value();
-  },
-  toggleChannel() {
-    db.update("channelsPopulated", (bool) => !bool).write();
   },
   isInitalized: db.has("totalUsers").value(),
   isVerified(tag) {

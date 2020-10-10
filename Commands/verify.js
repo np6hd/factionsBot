@@ -8,6 +8,11 @@ module.exports = {
   sendEmbed: false,
   usesShield: false,
   execute(bot, database, arguments, options, embed, message) {
+    if(message.channel.name != "verify") {
+      message.reply("Type this in the verify channel.")
+      return
+    }
+
     if (database.isVerified(message.author.tag)) {
       message.author.send("You have already been verified.");
       return;
@@ -26,8 +31,8 @@ module.exports = {
       .setDescription(
         embedWrapper +
           "Copy and paste the following command in game to become a verified user: " +
-          ".token " +
-          newToken +
+          "\__.token " +
+          newToken + "\__" + 
           embedWrapper
       );
     message.author.send(embed);

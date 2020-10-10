@@ -1,9 +1,7 @@
-const bufferCheckIntervals = require("./bufferCheckIntervals")
-const serverChatIntervals = require("./serverChatIntervals")
-const wallCheckIntervals = require("./wallCheckIntervals")
-const joinCommandIntervals = require("./joinCommandIntervals")
-
+const bufferCheckIntervals = require("./bufferCheckIntervals");
+const wallCheckIntervals = require("./wallCheckIntervals");
 
 module.exports = {
-    bufferCheckIntervals, serverChatIntervals, wallCheckIntervals, joinCommandIntervals
-}
+  bufferCheckIntervals,
+  wallCheckIntervals,
+};

@@ -8,8 +8,13 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
-  execute(bot, database, arguments, options, client, username, embed) {
-    database.resetDatabase()
-    embed.setColor("#a62019").addDescription("Database has been reset, everyone needs to verify again")
+  execute(bot, database, arguments, options, embed, message) {
+    database.resetDatabase();
+    embed
+      .setColor("#a62019")
+      .setTitle("Database Reset")
+      .setDescription(
+        "Database has been reset, everyone needs to verify again, type \__.setup\__ to enable channels again"
+      );
   },
 };

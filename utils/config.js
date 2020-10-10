@@ -13,6 +13,7 @@ const options = {
   joinCommandFrequency: userInfo.joinCommandFrequency,
   serverIP: userInfo.serverIP,
   prefix: userInfo.prefix,
+  url: "https://crafatar.com/avatars/"
 };
 
 const wait = (time) => new Promise((resolve) => setTimeout(resolve, time));
