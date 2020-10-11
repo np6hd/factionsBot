@@ -3,6 +3,7 @@ module.exports = {
   name: "verification",
   description: "Show Verification Commands",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "help",
   usesChat: false,

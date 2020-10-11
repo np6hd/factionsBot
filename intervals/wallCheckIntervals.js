@@ -1,5 +1,5 @@
 module.exports = (bot, database, options, channel, embed) => {
-  embed.setTitle("Wall Check Interval").setColor("#f93a2F");
+  embed.setTitle("Wall Check Interval").setColor("#f8c300");
   let today = new Date();
   let wallObj = database.getWallChecksObject();
   let timeDifference = Math.abs(
@@ -17,7 +17,7 @@ module.exports = (bot, database, options, channel, embed) => {
     embed.setDescription(
       "⚠️ Walls have not been checked for __" +
         wallObj.get("wallMinuteUnchecked").value() +
-        "\__ minutes"
+        "__ minutes"
     );
     channel.send(embed);
   }

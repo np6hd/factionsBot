@@ -14,41 +14,20 @@ const options = {
   serverIP: userInfo.serverIP,
   prefix: userInfo.prefix,
   url: "https://crafatar.com/avatars/",
+  tnturl: "https://i.imgur.com/oAJOKSy.jpg",
+  ftopFrequency: userInfo.ftopFrequency,
+  flistFrequency: userInfo.flistFrequency,
 };
 
 const setChannelArgs = [
-  {
-    name: "announcements",
-    description: "",
-  },
-  {
-    name: "weewoo",
-    description: "",
-  },
-  {
-    name: "wallchecks",
-    description: "",
-  },
-  {
-    name: "bufferchecks",
-    description: "",
-  },
-  {
-    name: "serverchat",
-    description: "",
-  },
-  {
-    name: "ftop",
-    description: "",
-  },
-  {
-    name: "flist",
-    description: "",
-  },
-  {
-    name: "verify",
-    description: "",
-  },
+  "announcements",
+  "weewoo",
+  "wallchecks",
+  "bufferchecks",
+  "serverchat",
+  "ftop",
+  "flist",
+  "verify",
 ];
 
 const wait = (time) => new Promise((resolve) => setTimeout(resolve, time));

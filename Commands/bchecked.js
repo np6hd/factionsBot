@@ -3,6 +3,7 @@ module.exports = {
   name: "bchecked",
   description: "If the user is verified, mark buffers checked or show cool down",
   checkArgs: false,
+  arguments: "",
   type: "ingame",
   category: "factions",
   usesChat: false,

@@ -2,6 +2,7 @@ module.exports = {
   name: "resetdb",
   description: "Reset the database for new map/season",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "admin",
   usesChat: false,
@@ -9,18 +10,11 @@ module.exports = {
   usesShield: false,
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
-    if (!message.member.hasPermission("ADMINISTRATOR")) {
-      embed.setDescription(
-        "```❌ You do not have permissions to run this command```"
-      );
-      return;
-    }
     database.resetDatabase();
     embed
       .setColor("#a62019")
-      .setTitle("Database Reset")
       .setDescription(
-        "Database has been reset, everyone needs to verify again, type __.set__ to setup channels again"
+        "```Database has been reset, everyone needs to verify and channels need be setup again```"
       );
   },
 };

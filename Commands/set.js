@@ -16,11 +16,11 @@ module.exports = {
         "**Syntax:** ```.set <name> <#serverchannel>```\n" +
         "**Example**: ```.set announcements #announcements```\n";
       for (eachArgs of setChannelArgs) {
-        let getID = database.getChannelID(eachArgs.name);
+        let getID = database.getChannelID(eachArgs);
         let channel = message.client.channels.cache.find(
           (channel) => channel.id === getID
         );
-        description += "**" + eachArgs.name + "** - ";
+        description += "**" + eachArgs + "** - ";
         if (channel == undefined) {
           description += "`Channel Not Set`\n";
         } else {
@@ -33,25 +33,29 @@ module.exports = {
         .setDescription(description);
     } else {
       let splitArgs = arguments.split(" ");
-      for (eachArgs of setChannelArgs) {
-        if (eachArgs.name == splitArgs[0]) {
-          let channel = message.client.channels.cache.find(
-            (channel) => channel.id === database.getChannelID(eachArgs.name)
+      if (setChannelArgs.includes(splitArgs[0])) {
+        let channel = message.client.channels.cache.find(
+          (channel) => channel.id === database.getChannelID(splitArgs[0])
+        );
+        if (channel != undefined)
+          embed.setDescription(
+            `❌ ${splitArgs[0].toUpperCase()} has already been set`
           );
-          if (channel != undefined)
-            embed.setDescription(
-              `❌ ${splitArgs[0].toUpperCase()} has already been set`
-            );
-          else {
-            database.setChannel(
-              splitArgs[0],
-              splitArgs[1].replace(/[^a-zA-Z0-9]/g, "")
-            );
-            embed.setDescription(
-              `✅ Set ${splitArgs[0]} channel to ${splitArgs[1]}`
-            );
-          }
+        else {
+          database.setChannel(
+            splitArgs[0],
+            splitArgs[1].replace(/[^a-zA-Z0-9]/g, "")
+          );
+          embed.setDescription(
+            `✅ Set ${splitArgs[0]} channel to ${splitArgs[1]}`
+          );
         }
+      } else {
+        embed
+          .setDescription(
+            "```❗ Error, type the correct syntax: .set <channel> <#channeltag>"
+          )
+          .setFooter("<> = required, [] = optional");
       }
     }
   },

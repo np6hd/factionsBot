@@ -4,6 +4,7 @@ module.exports = {
   name: "factions",
   description: "Show Factions Commands",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "help",
   usesChat: false,

@@ -2,6 +2,7 @@ module.exports = {
   name: "tpa",
   description: "Send a teleport request to a player",
   checkArgs: true,
+  arguments: "<player>",
   type: "discord",
   category: "admin",
   usesChat: true,

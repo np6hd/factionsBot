@@ -2,6 +2,7 @@ module.exports = {
   name: "msg",
   description: "Message a user with provided arguments",
   checkArgs: true,
+  arguments: "<user> [message]",
   type: "discord",
   category: "factions",
   usesChat: true,

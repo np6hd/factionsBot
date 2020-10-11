@@ -3,6 +3,7 @@ module.exports = {
   name: "ctop",
   description: "Show the top wall checkers",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "factions",
   usesChat: false,

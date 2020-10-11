@@ -2,6 +2,7 @@ module.exports = {
   name: "cmd",
   description: "Run normal commands with provided arguments",
   checkArgs: true,
+  arguments: "<arguments>",
   type: "discord",
   category: "admin",
   usesChat: true,

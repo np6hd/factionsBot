@@ -4,6 +4,7 @@ module.exports = {
   name: "vanished",
   description: "Check all vanished staffs",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "factions",
   usesChat: false,

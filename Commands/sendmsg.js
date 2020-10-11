@@ -2,6 +2,7 @@ module.exports = {
   name: "sendmsg",
   description: "Send a message through discord",
   checkArgs: true,
+  arguments: "<message>",
   type: "discord",
   category: "factions",
   usesChat: false,

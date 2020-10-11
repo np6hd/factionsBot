@@ -2,6 +2,7 @@ module.exports = {
   name: "ftop",
   description: "Run faction top command and show the current top factions",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "factions",
   usesChat: true,

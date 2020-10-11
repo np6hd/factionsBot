@@ -1,5 +1,5 @@
 module.exports = (bot, database, options, channel, embed) => {
-  embed.setTitle("Buffer Check Interval").setColor("#f93a2F")
+  embed.setTitle("Buffer Check Interval").setColor("#f8c300");
   let today = new Date();
   let wallObj = database.getBufferChecksObject();
   let timeDifference = Math.abs(
@@ -20,7 +20,7 @@ module.exports = (bot, database, options, channel, embed) => {
     embed.setDescription(
       "⚠️ Buffers have not been checked for __" +
         wallObj.get("bufferMinuteUnchecked").value() +
-        "\__ minutes"
+        "__ minutes"
     );
     channel.send(embed);
   }

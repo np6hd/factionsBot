@@ -2,6 +2,7 @@ module.exports = {
   name: "restart",
   description: "Restart the mineflayer bot",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "admin",
   usesChat: false,

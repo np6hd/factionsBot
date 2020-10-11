@@ -3,6 +3,7 @@ module.exports = {
   name: "verify",
   description: "Start a verification process for a user",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "verification",
   usesChat: false,

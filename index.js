@@ -39,6 +39,9 @@ bindEvents(bot);
 
 function bindEvents(bot) {
   bot.on("login", () => {
+    bot.settings.viewDistance = "tiny";
+    bot.settings.colorsEnabled = true;
+
     console.log(bot.username + " has connected to " + options.host);
     bot.chat(options.joinCommand);
   });
@@ -67,12 +70,10 @@ function bindEvents(bot) {
     if (!client.commands.has(command)) return;
 
     const arguments = message.split(" ").splice(1).join(" ");
-
     try {
       const clientCommand = client.commands.get(command);
 
       if (clientCommand.type != "ingame") return;
-      if (clientCommand.checkArgs && !arguments) return;
 
       if (clientCommand.name != "token" && !database.isUserVerified(username))
         return;
@@ -81,6 +82,14 @@ function bindEvents(bot) {
         bot.chat("Error: Shield is enabled.");
         return;
       }
+
+      if (clientCommand.checkArgs && !arguments) {
+        bot.chat(
+          `Error: Wrong Syntax, type: ${options.prefix}${clientCommand.name} ${clientCommand.arguments}`
+        );
+        return;
+      }
+
       let embed = new discord.MessageEmbed();
       embed
         .setTimestamp()
@@ -166,9 +175,13 @@ client.on("message", (message) => {
     if (clientCommand.type != "discord") return;
 
     if (clientCommand.checkArgs && !arguments) {
-      return message.reply(
-        "Arguments were not provided. Please retry with arguments."
-      );
+      let error = "⚠️ **Error** - `invalid arguments`\n\n";
+      error += `${bold}Syntax:${bold}${embedWrapper}${options.prefix}${clientCommand.name} ${clientCommand.arguments}${embedWrapper}\n`;
+      embed
+        .setColor("#f93a2f")
+        .setDescription(error)
+        .setFooter("<> = required, [] = optional");
+      return message.channel.send(embed);
     }
 
     if (!message.member.hasPermission("ADMINISTRATOR")) {
@@ -226,7 +239,12 @@ client.on("message", (message) => {
   }
 });
 
+client.on("error", (error) => {
+  console.log(error);
+});
+
 // collect multiple messages in game and then sends it to the channel, every 3 seconds
+// Different intervals
 
 setInterval(() => {
   const channel = client.channels.cache.find(
@@ -264,6 +282,52 @@ setInterval(() => {
     } else bot.chat("Error: Buffercheck channel has not been setup");
   }
 }, options.bufferCheckFrequency * minuteToMS + 5000);
+
+setInterval(() => {
+  const channel = client.channels.cache.find(
+    (channel) => channel.id === database.getChannelID("ftop")
+  );
+  if (channel != undefined) {
+    let embed = new discord.MessageEmbed();
+    embed
+      .setTimestamp()
+      .setFooter(bot.username, options.url + bot.player.uuid);
+    const clientCommand = client.commands.get("ftop");
+    clientCommand.execute(bot, database, arguments, options, embed);
+    commandsExecuted = true;
+
+    wait(300).then(() => {
+      clientCommand.parseChat(commandsData, embed, database);
+      channel.send(embed);
+      clear();
+    });
+  } else {
+    bot.chat("Error: FactionTop channel not setup");
+  }
+}, options.ftopFrequency * minuteToMS);
+
+setInterval(() => {
+  const channel = client.channels.cache.find(
+    (channel) => channel.id === database.getChannelID("flist")
+  );
+  if (channel != undefined) {
+    let embed = new discord.MessageEmbed();
+    embed
+      .setTimestamp()
+      .setFooter(bot.username, options.url + bot.player.uuid);
+    const clientCommand = client.commands.get("flist");
+    clientCommand.execute(bot, database, arguments, options, embed);
+    commandsExecuted = true;
+
+    wait(300).then(() => {
+      embed.setDescription("```" + commandsData.join("\n") + "```");
+      channel.send(embed);
+      clear();
+    });
+  } else {
+    bot.chat("Error: FactionList channel not setup");
+  }
+}, options.flistFrequency * minuteToMS + 5000);
 
 setInterval(() => {
   bot.chat(options.joinCommand);

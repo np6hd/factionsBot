@@ -3,6 +3,7 @@ module.exports = {
   name: "admin",
   description: "Show Administrative Commands",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "help",
   usesChat: false,

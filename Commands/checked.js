@@ -3,6 +3,7 @@ module.exports = {
   name: "checked",
   description: "If the user is verified, mark walls checked or show cool down",
   checkArgs: false,
+  arguments: "",
   type: "ingame",
   category: "factions",
   usesChat: false,

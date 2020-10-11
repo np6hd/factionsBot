@@ -3,6 +3,7 @@ module.exports = {
   description:
     "Run faction who command and show the factions information based on player or faction as an input ",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "factions",
   usesChat: true,

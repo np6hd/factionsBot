@@ -5,6 +5,7 @@ module.exports = {
   name: "ingame",
   description: "Show Ingame Commands",
   checkArgs: false,
+  arguments: "",
   type: "discord",
   category: "help",
   usesChat: false,
@@ -13,7 +14,7 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message, clientCommands) {
     let ingameCommands = "";
-    ingameCommands += `**Info**: ${embedWrapper}A user must be verified first. Type ${options.prefix}verify in the #verify channel to get started ${embedWrapper}\n`;
+    ingameCommands += `**Info**: ${embedWrapper}A user must be verified first\nType ${options.prefix}verify in the #verify channel to get started ${embedWrapper}\n`;
     for (eachCommand of clientCommands) {
       if (eachCommand[1].type === "ingame") {
         ingameCommands +=
