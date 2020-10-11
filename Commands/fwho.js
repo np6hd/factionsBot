@@ -2,7 +2,7 @@ module.exports = {
   name: "fwho",
   description:
     "Run faction who command and show the factions information based on player or faction as an input ",
-  checkArgs: true,
+  checkArgs: false,
   type: "discord",
   category: "factions",
   usesChat: true,

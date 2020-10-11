@@ -1,7 +1,7 @@
 const bold = "**";
 module.exports = {
   name: "bchecked",
-  description: "If User is verified, mark buffers checked or show cool down",
+  description: "If the user is verified, mark buffers checked or show cool down",
   checkArgs: false,
   type: "ingame",
   category: "factions",
@@ -36,7 +36,7 @@ module.exports = {
           username +
           ", has total: 1 buffer checks"
       );
-      let description = "Buffer have been checked by __" + username + "__\n";
+      let description = "Buffers have been checked by __" + username + "__\n";
       description += bold + username + bold + " checks: 1\n";
 
       embed.setDescription(description);
@@ -56,7 +56,7 @@ module.exports = {
             userWallObject.get("bufferChecks").value() +
             " buffer checks"
         );
-        let description = "Buffer have been checked by __" + username + "__\n";
+        let description = "Buffers have been checked by __" + username + "__\n";
         description +=
           bold +
           username +

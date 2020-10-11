@@ -165,53 +165,58 @@ client.on("message", (message) => {
 
     if (clientCommand.type != "discord") return;
 
-    if (
-      clientCommand.name != "verify" &&
-      !database.isVerified(message.author.tag)
-    ) {
-      return;
-    }
-
     if (clientCommand.checkArgs && !arguments) {
       return message.reply(
         "Arguments were not provided. Please retry with arguments."
       );
     }
 
-    if (usedCommand.has(message.author.id)) {
-      return message.reply("You are in a cooldown");
-    } else {
-      usedCommand.add(message.author.id);
-      wait(5000).then(() => {
-        usedCommand.delete(message.author.id);
-      });
+    if (!message.member.hasPermission("ADMINISTRATOR")) {
+      if (
+        clientCommand.name != "verify" &&
+        clientCommand.name != "help" &&
+        !database.isVerified(message.author.tag)
+      ) {
+        return message.reply("You need to be verified to run that command");
+      }
+      if (usedCommand.has(message.author.id)) {
+        return message.reply("You are in a cooldown");
+      } else {
+        usedCommand.add(message.author.id);
+        wait(10000).then(() => {
+          usedCommand.delete(message.author.id);
+        });
+      }
+      if (clientCommand.adminPerms) {
+        embed
+          .setColor("#7a2f8f")
+          .setDescription(
+            embedWrapper +
+              "❌ You do not have permissions to run this command" +
+              embedWrapper
+          );
+        message.channel.send(embed);
+        return;
+      }
     }
 
     if (botRestarting) return;
-
-    if (
-      clientCommand.adminPerms &&
-      !message.member.hasPermission("ADMINISTRATOR")
-    ) {
-      embed
-        .setColor("#7a2f8f")
-        .setDescription(
-          embedWrapper +
-            "❌ You do not have permissions to run this command" +
-            embedWrapper
-        );
-      message.channel.send(embed)
-      return;
-    }
-
-    clientCommand.execute(bot, database, arguments, options, embed, message, client.commands);
+    clientCommand.execute(
+      bot,
+      database,
+      arguments,
+      options,
+      embed,
+      message,
+      client.commands
+    );
     commandsExecuted = true;
-    
+
     wait(300).then(() => {
       if (clientCommand.usesChat) {
         if (clientCommand.name == "ftop")
           clientCommand.parseChat(commandsData, embed, database);
-        else embed.setDescription(commandsData.join("\n"));
+        else embed.setDescription("```" + commandsData.join("\n") + "```");
       }
       if (clientCommand.sendEmbed) message.channel.send(embed);
       clear();
@@ -243,7 +248,7 @@ setInterval(() => {
       let embed = new discord.MessageEmbed();
       embed.setTimestamp();
       intervals.wallCheckIntervals(bot, database, options, channel, embed);
-    }
+    } else bot.chat("Error: Wallcheck channel has not been setup");
   }
 }, options.wallCheckFrequency * minuteToMS);
 
@@ -256,7 +261,7 @@ setInterval(() => {
       let embed = new discord.MessageEmbed();
       embed.setTimestamp();
       intervals.bufferCheckIntervals(bot, database, options, channel, embed);
-    }
+    } else bot.chat("Error: Buffercheck channel has not been setup");
   }
 }, options.bufferCheckFrequency * minuteToMS + 5000);
 

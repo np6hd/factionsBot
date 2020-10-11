@@ -11,18 +11,18 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     if (message.channel.name != this.name) {
-      message.reply("Type this in the verify channel.");
+      message.reply("Type this in the verify channel");
       return;
     }
 
     if (database.isVerified(message.author.tag)) {
-      message.author.send("You have already been verified.");
+      message.reply("You have already been verified");
       return;
     }
     let author = `${message.author}`;
     message.channel.send(
       author +
-        " You are almost verified. Read the direct message sent to you to verify."
+        " You are almost verified. Read the direct message sent to you to verify"
     );
 
     const newToken = database.createTempToken(message.author.tag);

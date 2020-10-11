@@ -11,7 +11,7 @@ module.exports = {
   execute(bot, database, arguments, options, embed, message) {
     embed
       .setColor("#A62019")
-      .setDescription("⚠️ Restarting bot, waiting for 10 seconds");
+      .setDescription("```⚠️ Restarting bot, wait for 10 seconds```");
     bot.quit();
   },
 };

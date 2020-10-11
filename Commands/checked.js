@@ -1,7 +1,7 @@
 const bold = "**";
 module.exports = {
   name: "checked",
-  description: "If User is verified, mark walls checked or show cool down",
+  description: "If the user is verified, mark walls checked or show cool down",
   checkArgs: false,
   type: "ingame",
   category: "factions",
@@ -56,7 +56,7 @@ module.exports = {
             userWallObject.get("wallChecks").value() +
             " wall checks"
         );
-        let description = "Walls has been checked by __" + username + "__\n";
+        let description = "Walls have been checked by __" + username + "__\n";
         description +=
           bold +
           username +

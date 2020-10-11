@@ -1,8 +1,7 @@
 const { setChannelArgs } = require("../utils/config");
-const embedWrapper = "```";
 module.exports = {
   name: "set",
-  description: "Help setup channels",
+  description: "Show Channel Setup Commands",
   checkArgs: false,
   type: "discord",
   category: "help",
@@ -23,7 +22,7 @@ module.exports = {
         );
         description += "**" + eachArgs.name + "** - ";
         if (channel == undefined) {
-          description += "Channel not set\n";
+          description += "`Channel Not Set`\n";
         } else {
           description += "<#" + getID + ">\n";
         }
