@@ -5,6 +5,7 @@ const fs = require("fs");
 const { options, wait } = require("./Utils/config");
 const database = require("./Utils/database");
 const intervals = require("./Intervals/intervals");
+const { turquoise } = require("color-name");
 
 if (!database.isInitalized) {
   database.createDatabase();
@@ -36,8 +37,6 @@ let commandsExecuted = false;
 
 var bot = mineflayer.createBot(options);
 bindEvents(bot);
-
-bot.on("")
 
 function bindEvents(bot) {
   bot.on("login", () => {
@@ -114,7 +113,7 @@ function bindEvents(bot) {
   // Log errors and kick reasons:
   bot.on("kicked", (reason, loggedIn) => {
     console.log(reason, loggedIn);
-    bot.quit()
+    bot.quit();
   });
 
   bot.on("end", () => {
@@ -158,26 +157,6 @@ client.on("message", (message) => {
     .setTimestamp()
     .setFooter(message.author.tag, message.author.displayAvatarURL());
 
-  if (command == "restart")
-    if (message.member.hasPermission("ADMINISTRATOR")) {
-      embed
-        .setColor("#A62019")
-        .setDescription("⚠️ Restarting bot, waiting for 10 seconds");
-      message.channel.send(embed);
-      bot.quit()
-    } else {
-      embed
-        .setColor("#7a2f8f")
-        .setTitle("Restart")
-        .setDescription(
-          embedWrapper +
-            "❌ You do not have permissions to run this command" +
-            embedWrapper
-        );
-      message.channel.send(embed);
-      return;
-    }
-
   if (!client.commands.has(command)) return;
 
   const arguments = message.content.split(" ").splice(1).join(" ");
@@ -209,7 +188,21 @@ client.on("message", (message) => {
       });
     }
 
-    if(botRestarting) return;
+    if (botRestarting) return;
+
+    if (
+      clientCommand.adminPerms &&
+      !message.member.hasPermission("ADMINISTRATOR")
+    ) {
+      embed
+        .setColor("#7a2f8f")
+        .setDescription(
+          embedWrapper +
+            "❌ You do not have permissions to run this command" +
+            embedWrapper
+        );
+      return;
+    }
 
     clientCommand.execute(bot, database, arguments, options, embed, message);
     commandsExecuted = true;
@@ -284,11 +277,13 @@ const end = () => {
 };
 
 const restart = () => {
-  wait((minuteToMS/10)).then(() => {
+  botRestarting = true;
+  wait(minuteToMS / 10).then(() => {
     console.log("Bot is restarting...");
     bot = mineflayer.createBot(options);
     database.resetTempUsers();
     bindEvents(bot);
+    botRestarting = false;
   });
 };
 

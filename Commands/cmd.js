@@ -6,6 +6,7 @@ module.exports = {
   usesChat: true,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat(arguments);
     embed.setColor("#969c9f").setTitle("Command Executed | " + options.serverIP);

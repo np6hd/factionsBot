@@ -7,6 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: false,
   usesShield: true,
+  adminPerms: false,
   execute(bot, database, arguments, options, client, username, embed) {
     const bufferCheckChannel = client.channels.cache.find(
       (channel) => channel.id === database.getChannelID("bufferchecks")

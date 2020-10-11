@@ -6,6 +6,7 @@ module.exports = {
   usesChat: true,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: false,
   execute(bot, database, arguments, options, client, username) {
     let userObj = database.removeTempToken(arguments)
     if (userObj != []) {

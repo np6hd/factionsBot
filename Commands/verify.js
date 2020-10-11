@@ -7,6 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: false,
   usesShield: false,
+  adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     if (message.channel.name != this.name) {
       message.reply("Type this in the verify channel.");

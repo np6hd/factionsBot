@@ -6,6 +6,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     if (!message.member.hasPermission("ADMINISTRATOR")) {
       embed.setDescription(

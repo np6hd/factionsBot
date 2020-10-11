@@ -6,6 +6,7 @@ module.exports = {
   usesChat: true,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/f list");
     embed.setColor("#a652bb").setTitle("Factions List | " + options.serverIP);

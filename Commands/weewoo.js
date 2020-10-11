@@ -7,6 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: true,
+  adminPerms: false,
   execute(bot, database, arguments, options, client, username, embed) {
       
   },

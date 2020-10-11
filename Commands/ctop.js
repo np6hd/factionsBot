@@ -7,6 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     let users = "";
     let wallChecks = "";

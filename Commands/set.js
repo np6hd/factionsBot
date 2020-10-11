@@ -7,6 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
+  adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     if (!arguments) {
       let description = "";

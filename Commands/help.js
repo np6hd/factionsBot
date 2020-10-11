@@ -7,7 +7,7 @@ module.exports = {
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
-  usesShield: false,
+  adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     embed.setColor("#00c09a")
   },
