@@ -2,7 +2,7 @@
 
 # basic factions bot v.0.2
 
-To get started first make sure to install these modules: nodejs, discordjs, node-fetch, and lowdb\n
+To get started first make sure to install these modules: nodejs, discordjs, node-fetch, and lowdb <br />
 create a config.json file in the utils folder (./utils/config.json) as a json object with the following:
 
 ```json
