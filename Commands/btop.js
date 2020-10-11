@@ -5,6 +5,7 @@ module.exports = {
   description: "Show the top buffer checkers",
   checkArgs: false,
   type: "discord",
+  category: "factions",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,

@@ -5,6 +5,7 @@ module.exports = {
   description: "Check all vanished staffs",
   checkArgs: false,
   type: "discord",
+  category: "factions",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,

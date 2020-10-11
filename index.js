@@ -5,7 +5,6 @@ const fs = require("fs");
 const { options, wait } = require("./Utils/config");
 const database = require("./Utils/database");
 const intervals = require("./Intervals/intervals");
-const { turquoise } = require("color-name");
 
 if (!database.isInitalized) {
   database.createDatabase();
@@ -201,12 +200,13 @@ client.on("message", (message) => {
             "❌ You do not have permissions to run this command" +
             embedWrapper
         );
+      message.channel.send(embed)
       return;
     }
 
-    clientCommand.execute(bot, database, arguments, options, embed, message);
+    clientCommand.execute(bot, database, arguments, options, embed, message, client.commands);
     commandsExecuted = true;
-
+    
     wait(300).then(() => {
       if (clientCommand.usesChat) {
         if (clientCommand.name == "ftop")

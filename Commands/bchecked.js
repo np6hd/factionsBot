@@ -4,6 +4,7 @@ module.exports = {
   description: "If User is verified, mark buffers checked or show cool down",
   checkArgs: false,
   type: "ingame",
+  category: "factions",
   usesChat: false,
   sendEmbed: false,
   usesShield: true,

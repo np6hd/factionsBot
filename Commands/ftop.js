@@ -3,6 +3,7 @@ module.exports = {
   description: "Run faction top command and show the current top factions",
   checkArgs: false,
   type: "discord",
+  category: "factions",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

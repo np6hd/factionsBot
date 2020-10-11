@@ -1,8 +1,8 @@
 const bold = "**";
 const underline = "__";
 module.exports = {
-  name: "help",
-  description: "Show different categories of help commands",
+  name: "ingame",
+  description: "Show all the current avaiable commands used in game",
   checkArgs: false,
   type: "discord",
   category: "help",
@@ -11,18 +11,18 @@ module.exports = {
   usesShield: false,
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message, clientCommands) {
-    let helpCommands = "";
+    let ingameCommands = "";
     for (eachCommand of clientCommands) {
-      if (eachCommand[1].category === "help") {
-        helpCommands +=
+      if (eachCommand[1].type === "ingame") {
+        ingameCommands +=
           bold + options.prefix + eachCommand[1].name + bold + " - ";
-        helpCommands +=
+        ingameCommands +=
           underline + eachCommand[1].description + underline + "\n";
       }
     }
     embed
       .setColor("#00c09a")
-      .setTitle("Help Commands:")
-      .setDescription(helpCommands);
+      .setTitle("In game commands:")
+      .setDescription(ingameCommands);
   },
 };

@@ -4,6 +4,7 @@ module.exports = {
     "Run faction who command and show the factions information based on player or faction as an input ",
   checkArgs: true,
   type: "discord",
+  category: "factions",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

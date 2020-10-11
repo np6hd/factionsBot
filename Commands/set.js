@@ -1,9 +1,11 @@
 const { setChannelArgs } = require("../utils/config");
+const embedWrapper = "```";
 module.exports = {
   name: "set",
-  description: "Create all the channels",
+  description: "Help setup channels",
   checkArgs: false,
   type: "discord",
+  category: "help",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
@@ -46,7 +48,9 @@ module.exports = {
               splitArgs[0],
               splitArgs[1].replace(/[^a-zA-Z0-9]/g, "")
             );
-            embed.setDescription(`✅ Set ${splitArgs[0]} channel to ${splitArgs[1]}`);
+            embed.setDescription(
+              `✅ Set ${splitArgs[0]} channel to ${splitArgs[1]}`
+            );
           }
         }
       }

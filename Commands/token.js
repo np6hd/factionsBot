@@ -1,8 +1,9 @@
 module.exports = {
   name: "token",
-  description: "Verify and add the user to the whitelist",
+  description: "Token is verfied and user is added to whitelist",
   checkArgs: true,
   type: "ingame",
+  category: "verification",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

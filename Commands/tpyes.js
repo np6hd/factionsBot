@@ -3,6 +3,7 @@ module.exports = {
   description: "Accept incoming/outgoing teleport request",
   checkArgs: false,
   type: "discord",
+  category: "admin",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

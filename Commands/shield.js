@@ -1,8 +1,9 @@
 module.exports = {
   name: "shield",
-  description: "Enable/Disable shield",
+  description: "Turn on/off wall check operations",
   checkArgs: true,
   type: "discord",
+  category: "admin",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,

@@ -1,8 +1,8 @@
 const bold = "**";
 const underline = "__";
 module.exports = {
-  name: "help",
-  description: "Show different categories of help commands",
+  name: "factions",
+  description: "Show all the current avaiable commands relating to factions",
   checkArgs: false,
   type: "discord",
   category: "help",
@@ -11,18 +11,18 @@ module.exports = {
   usesShield: false,
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message, clientCommands) {
-    let helpCommands = "";
+    let factionCommands = "";
     for (eachCommand of clientCommands) {
-      if (eachCommand[1].category === "help") {
-        helpCommands +=
+      if (eachCommand[1].category === "factions") {
+        factionCommands +=
           bold + options.prefix + eachCommand[1].name + bold + " - ";
-        helpCommands +=
+        factionCommands +=
           underline + eachCommand[1].description + underline + "\n";
       }
     }
     embed
       .setColor("#00c09a")
-      .setTitle("Help Commands:")
-      .setDescription(helpCommands);
+      .setTitle("Faction Commands:")
+      .setDescription(factionCommands);
   },
 };

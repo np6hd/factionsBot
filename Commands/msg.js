@@ -3,6 +3,7 @@ module.exports = {
   description: "Message a user with provided arguments",
   checkArgs: true,
   type: "discord",
+  category: "factions",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

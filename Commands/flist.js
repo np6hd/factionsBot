@@ -3,6 +3,7 @@ module.exports = {
   description: "Run factions list command and show the current factions list",
   checkArgs: false,
   type: "discord",
+  category: "factions",
   usesChat: true,
   sendEmbed: true,
   usesShield: false,

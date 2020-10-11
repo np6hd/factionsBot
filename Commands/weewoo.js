@@ -1,14 +1,14 @@
 const bold = "**";
 module.exports = {
-  name: "checked",
-  description: "If User is verified, mark walls checked or show cool down",
+  name: "weewoo",
+  description: "Tag everyone to alert them of a possbile raid",
   checkArgs: false,
   type: "ingame",
+  category: "factions",
   usesChat: false,
   sendEmbed: true,
   usesShield: true,
   adminPerms: false,
   execute(bot, database, arguments, options, client, username, embed) {
-      
   },
 };

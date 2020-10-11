@@ -3,6 +3,7 @@ module.exports = {
   description: "Reset the database for new map/season",
   checkArgs: false,
   type: "discord",
+  category: "admin",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
