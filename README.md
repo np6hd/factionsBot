@@ -1,5 +1,11 @@
 # factionsBot
 
+# USAGE WARNING:
+You may modify these codes and add to it as you may like.
+However, you are not allowed to take this code and sell to others.
+
+
+
 # basic factions bot v.0.2
 
 To get started first make sure to install these modules: nodejs, discordjs, node-fetch, and lowdb <br />
