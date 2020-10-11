@@ -5,9 +5,6 @@ const fs = require("fs");
 const { options, wait } = require("./Utils/config");
 const database = require("./Utils/database");
 const intervals = require("./Intervals/intervals");
-const { get } = require("lodash");
-const { isVerified } = require("./Utils/database");
-const { verify } = require("crypto");
 
 if (!database.isInitalized) {
   database.createDatabase();
@@ -32,12 +29,15 @@ const minuteToMS = 60 * 1000;
 const usedCommand = new Set();
 const bold = "**";
 const embedWrapper = "```";
+let botRestarting = false;
 let serverChat = [];
 let commandsData = [];
 let commandsExecuted = false;
 
 var bot = mineflayer.createBot(options);
 bindEvents(bot);
+
+bot.on("")
 
 function bindEvents(bot) {
   bot.on("login", () => {
@@ -114,7 +114,7 @@ function bindEvents(bot) {
   // Log errors and kick reasons:
   bot.on("kicked", (reason, loggedIn) => {
     console.log(reason, loggedIn);
-    restart();
+    bot.quit()
   });
 
   bot.on("end", () => {
@@ -162,10 +162,9 @@ client.on("message", (message) => {
     if (message.member.hasPermission("ADMINISTRATOR")) {
       embed
         .setColor("#A62019")
-        .setTitle("Restart")
-        .setDescription("⚠️ Restarting bot...");
+        .setDescription("⚠️ Restarting bot, waiting for 10 seconds");
       message.channel.send(embed);
-      restart();
+      bot.quit()
     } else {
       embed
         .setColor("#7a2f8f")
@@ -188,7 +187,10 @@ client.on("message", (message) => {
 
     if (clientCommand.type != "discord") return;
 
-    if (clientCommand.name != "verify" && !database.isVerified(message.author.tag)) {
+    if (
+      clientCommand.name != "verify" &&
+      !database.isVerified(message.author.tag)
+    ) {
       return;
     }
 
@@ -206,6 +208,8 @@ client.on("message", (message) => {
         usedCommand.delete(message.author.id);
       });
     }
+
+    if(botRestarting) return;
 
     clientCommand.execute(bot, database, arguments, options, embed, message);
     commandsExecuted = true;
@@ -280,8 +284,7 @@ const end = () => {
 };
 
 const restart = () => {
-  wait(10000).then(() => {
-    bot.quit("Restarting...");
+  wait((minuteToMS/10)).then(() => {
     console.log("Bot is restarting...");
     bot = mineflayer.createBot(options);
     database.resetTempUsers();
