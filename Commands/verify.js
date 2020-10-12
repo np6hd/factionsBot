@@ -34,7 +34,7 @@ module.exports = {
       .setDescription(
         "**Copy and paste the following command in-game to become a verified user:** " +
           embedWrapper +
-          ".token " +
+          `${options.prefix}token ` +
           newToken +
           embedWrapper
       );

@@ -1,4 +1,5 @@
 const { setChannelArgs } = require("../utils/config");
+const embedWrapper = "```";
 module.exports = {
   name: "set",
   description: "Show Channel Setup Commands",
@@ -13,8 +14,8 @@ module.exports = {
     if (!arguments) {
       let description = "";
       description +=
-        "**Syntax:** ```.set <name> <#serverchannel>```\n" +
-        "**Example**: ```.set announcements #announcements```\n";
+        `**Syntax:** ${embedWrapper}${options.prefix}set <name> <#serverchannel>${embedWrapper}\n` +
+        `**Example**: ${embedWrapper}${options.prefix}set announcements #announcements${embedWrapper}\n`;
       for (eachArgs of setChannelArgs) {
         let getID = database.getChannelID(eachArgs);
         let channel = message.client.channels.cache.find(
@@ -53,7 +54,7 @@ module.exports = {
       } else {
         embed
           .setDescription(
-            "```❗ Error, type the correct syntax: .set <channel> <#channeltag>"
+            `${embedWrapper}❗ Error, type the correct syntax: ${options.prefix}set <channel> <#channeltag>`
           )
           .setFooter("<> = required, [] = optional");
       }

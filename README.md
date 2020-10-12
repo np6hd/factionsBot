@@ -20,7 +20,7 @@ create a config.json file in the utils folder (./utils/config.json) as a json ob
   "serverIP": "play.infusedmc.com",
   "joinCommand": "/mafia",
   "wallCheckFrequency": 3, "how often should wall checks occur in minutes"
-  "bufferCheckFrequency": 6, "how often should buffer check occur in minutes"
+  "bufferCheckFrequency": 6, "how often should buffer checks occur in minutes"
   "joinCommandFrequency": 10, "run join command in minutes"
   "prefix": ".",
   "ftopFrequency": 30, "run ftop command at an interval in minutes"

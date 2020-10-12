@@ -17,6 +17,8 @@ const options = {
   tnturl: "https://i.imgur.com/oAJOKSy.jpg",
   ftopFrequency: userInfo.ftopFrequency,
   flistFrequency: userInfo.flistFrequency,
+  mojangUrl: "https://authserver.mojang.com/authenticate",
+  serverStatusURL: "https://api.mcsrvstat.us/2/",
   getDifference(previousTime, currentTime) {
     var d = Math.abs(currentTime - previousTime) / 1000;
     var r = {};

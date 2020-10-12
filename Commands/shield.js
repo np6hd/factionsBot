@@ -14,23 +14,23 @@ module.exports = {
   execute(bot, database, arguments, options, embed, message) {
     if (arguments == "on") {
       if (database.isShieldOn()) {
-        embed.setColor("#f8c300").setDescription("```Shield is already on```");
+        embed.setColor("#f8c300").setDescription("⚠️ Shield is already turned on");
         return;
       }
       embed
         .setColor("#00d166")
         .setDescription(
-          "```Shield is enabled, all wall check operations are halted```"
+          "✅ Shield is enabled, all wall check operations are halted"
         );
     } else if (arguments == "off") {
       if (!database.isShieldOn()) {
-        embed.setColor("#f8c300").setDescription("```Shield is already off```");
+        embed.setColor("#f8c300").setDescription("⚠️ Shield is already off");
         return;
       }
       embed
         .setColor("#fd0061")
         .setDescription(
-          "```Shield is disabled, all wall check operations are resumed```"
+          "⚠️ Shield is disabled, all wall check operations are resumed"
         );
     } else {
       let error = "⚠️ **Error** - `invalid arguments`\n\n";
