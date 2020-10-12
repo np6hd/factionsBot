@@ -28,54 +28,37 @@ module.exports = {
       .getUserObject(username)
       .get("userWallChecks");
 
-    if (userWallObject.get("wallChecks").value() == 0) {
+    const timeDifference = options.getDifference(
+      userWallObject.get("lastWallChecked").value(),
+      today.getTime()
+    );
+    if (timeDifference.minutes >= 1) {
       database.updateWallChecked(userWallObject, currentTime);
       bot.chat(
-        "Walls have been checked by " +
+        "Walls checked by " +
           username +
-          ". " +
-          username +
-          ", has total: 1 wall checks"
+          ", with total: " +
+          userWallObject.get("wallChecks").value() +
+          " wall checks"
       );
       let description = "Walls have been checked by __" + username + "__\n";
-      description += bold + username + bold + " checks: 1\n";
-
+      description +=
+        bold +
+        username +
+        " checks: " +
+        bold +
+        userWallObject.get("wallChecks").value() +
+        "\n";
       embed.setDescription(description);
       wallCheckChannel.send(embed);
     } else {
-      let coolDown = Math.abs(
-        (currentTime - userWallObject.get("lastWallChecked").value()) / 1000
+      let coolDown = 30 - timeDifference.seconds;
+      bot.chat(
+        username +
+          ", you are in (" +
+          coolDown.toFixed(2) +
+          ") seconds cooldown."
       );
-      if (coolDown > 30) {
-        database.updateWallChecked(userWallObject, currentTime);
-        bot.chat(
-          "Walls have been checked by " +
-            username +
-            ". " +
-            username +
-            ", has total: " +
-            userWallObject.get("wallChecks").value() +
-            " wall checks"
-        );
-        let description = "Walls have been checked by __" + username + "__\n";
-        description +=
-          bold +
-          username +
-          bold +
-          " checks: " +
-          userWallObject.get("wallChecks").value() +
-          "\n";
-        embed.setDescription(description);
-        wallCheckChannel.send(embed);
-      } else {
-        coolDown = 30 - coolDown;
-        bot.chat(
-          username +
-            ", you are in (" +
-            coolDown.toFixed(2) +
-            ") seconds cooldown."
-        );
-      }
     }
   },
 };

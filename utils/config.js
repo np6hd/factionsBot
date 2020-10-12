@@ -17,6 +17,24 @@ const options = {
   tnturl: "https://i.imgur.com/oAJOKSy.jpg",
   ftopFrequency: userInfo.ftopFrequency,
   flistFrequency: userInfo.flistFrequency,
+  getDifference(previousTime, currentTime) {
+    var d = Math.abs(currentTime - previousTime) / 1000;
+    var r = {};
+    Object.keys(timeFormat).forEach(function (key) {
+      r[key] = Math.floor(d / timeFormat[key]);
+      d -= r[key] * timeFormat[key];
+    });
+    return r;
+  },
+};
+
+const timeFormat = {
+  months: 2592000,
+  weeks: 604800,
+  days: 86400,
+  hours: 3600,
+  minutes: 60,
+  seconds: 1,
 };
 
 const setChannelArgs = [

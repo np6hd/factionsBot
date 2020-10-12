@@ -2,22 +2,29 @@ module.exports = (bot, database, options, channel, embed) => {
   embed.setTitle("Wall Check Interval").setColor("#f8c300");
   let today = new Date();
   let wallObj = database.getWallChecksObject();
-  let timeDifference = Math.abs(
-    (today.getTime() - wallObj.get("lastWallChecked").value()) / 1000
+  const timeDifference = options.getDifference(
+    wallObj.get("lastWallChecked").value(),
+    today.getTime()
   );
-  if (timeDifference / 60 > options.wallCheckFrequency) {
-    wallObj
-      .update("wallMinuteUnchecked", (n) => (n += options.wallCheckFrequency))
-      .write();
+  if (timeDifference.minutes >= options.wallCheckFrequency) {
+    let time = "";
+    Object.keys(timeDifference).forEach((key) => {
+      if (timeDifference[key] != 0) {
+        if(key == "seconds") return
+        if (key == "minutes") time += timeDifference[key] + " " + key + ".";
+        else time += timeDifference[key] + " " + key + " ";
+      }
+    });
+    wallObj.update("wallMinuteUnchecked", (n) => (n = time)).write();
     bot.chat(
-      "Walls have not been checked for " +
+      "Walls not checked for: " +
         wallObj.get("wallMinuteUnchecked").value() +
-        " minutes. Check walls now and type (.checked) to clear it!"
+        `Check walls now and type (${options.prefix}checked) to clear it!`
     );
     embed.setDescription(
       "⚠️ Walls have not been checked for __" +
         wallObj.get("wallMinuteUnchecked").value() +
-        "__ minutes"
+        "__"
     );
     channel.send(embed);
   }

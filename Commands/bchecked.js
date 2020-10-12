@@ -1,7 +1,8 @@
 const bold = "**";
 module.exports = {
   name: "bchecked",
-  description: "If the user is verified, mark buffers checked or show cool down",
+  description:
+    "If the user is verified, mark buffers checked or show cool down",
   checkArgs: false,
   arguments: "",
   type: "ingame",
@@ -28,54 +29,37 @@ module.exports = {
 
     embed.setColor("#00D166").setTitle("Buffer Check");
 
-    if (userWallObject.get("bufferChecks").value() == 0) {
+    const timeDifference = options.getDifference(
+      userWallObject.get("lastBufferChecked").value(),
+      today.getTime()
+    );
+    if (timeDifference.minutes >= 1) {
       database.updateBufferChecked(userWallObject, currentTime);
       bot.chat(
-        "Buffers have been checked by " +
+        "Buffers checked by " +
           username +
-          ". " +
-          username +
-          ", has total: 1 buffer checks"
+          ", with total: " +
+          userWallObject.get("bufferChecks").value() +
+          " buffer checks"
       );
       let description = "Buffers have been checked by __" + username + "__\n";
-      description += bold + username + bold + " checks: 1\n";
-
+      description +=
+        bold +
+        username +
+        " checks: " +
+        bold +
+        userWallObject.get("bufferChecks").value() +
+        "\n";
       embed.setDescription(description);
       bufferCheckChannel.send(embed);
     } else {
-      let coolDown = Math.abs(
-        (currentTime - userWallObject.get("lastBufferChecked").value()) / 1000
+      let coolDown = 60 - timeDifference.seconds;
+      bot.chat(
+        username +
+          ", you are in (" +
+          coolDown.toFixed(2) +
+          ") seconds cooldown."
       );
-      if (coolDown > 60) {
-        database.updateBufferChecked(userWallObject, currentTime);
-        bot.chat(
-          "Buffers have been checked by " +
-            username +
-            ". " +
-            username +
-            ", has total: " +
-            userWallObject.get("bufferChecks").value() +
-            " buffer checks"
-        );
-        let description = "Buffers have been checked by __" + username + "__\n";
-        description +=
-          bold +
-          username +
-          bold +
-          " checks: " +
-          userWallObject.get("bufferChecks").value() +
-          "\n";
-        embed.setDescription(description);
-        bufferCheckChannel.send(embed);
-      } else {
-        coolDown = 60 - coolDown;
-        bot.chat(
-          username +
-            ", you are in (" +
-            coolDown.toFixed(2) +
-            ") seconds cooldown."
-        );
-      }
     }
   },
 };

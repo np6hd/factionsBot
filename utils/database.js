@@ -10,11 +10,11 @@ module.exports = {
       users: [],
       wallChecks: {
         lastWallChecked: today.getTime(),
-        wallMinuteUnchecked: 0,
+        wallMinuteUnchecked: "",
       },
       bufferChecks: {
         lastBufferChecked: today.getTime(),
-        bufferMinuteUnchecked: 0,
+        bufferMinuteUnchecked: "",
       },
       temporaryUser: [],
       prevFtop: [],
@@ -39,8 +39,8 @@ module.exports = {
         username: username,
         discordTag: discordTag,
         userWallChecks: {
-          wallChecks: 0,
-          bufferChecks: 0,
+          wallChecks: 1,
+          bufferChecks: 1,
           lastWallChecked: today.getTime(),
           lastBufferChecked: today.getTime(),
         },
@@ -101,7 +101,7 @@ module.exports = {
     userWallObj.update("wallChecks", (n) => n + 1).write();
     userWallObj.update("lastWallChecked", (n) => (n = currentTime)).write();
     wallCheckObj.update("lastWallChecked", (n) => (n = currentTime)).write();
-    wallCheckObj.update("wallMinuteUnchecked", (n) => (n = 0)).write();
+    wallCheckObj.update("wallMinuteUnchecked", (n) => (n = "")).write();
   },
   updateBufferChecked(userBufferObj, currentTime) {
     const bufferCheckObj = this.getBufferChecksObject();
@@ -110,7 +110,7 @@ module.exports = {
     bufferCheckObj
       .update("lastBufferChecked", (n) => (n = currentTime))
       .write();
-    bufferCheckObj.update("bufferMinuteUnchecked", (n) => (n = 0)).write();
+    bufferCheckObj.update("bufferMinuteUnchecked", (n) => (n = "")).write();
   },
   toggleShield() {
     db.update("shield", (bool) => !bool).write();

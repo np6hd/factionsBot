@@ -151,7 +151,7 @@ client.on("guildMemberRemove", (member) => {
 client.on("message", (message) => {
   if (message.channel.type == "dm") return;
 
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
 
   const command = message.content
     .slice(prefix.length)
@@ -159,6 +159,12 @@ client.on("message", (message) => {
     .split(/ +/)
     .shift()
     .toLowerCase();
+
+  if (message.author.bot) {
+    if (command != "ftop" && command != "flist") {
+      return;
+    }
+  }
 
   let embed = new discord.MessageEmbed();
   embed
@@ -268,7 +274,7 @@ setInterval(() => {
       intervals.wallCheckIntervals(bot, database, options, channel, embed);
     } else bot.chat("Error: Wallcheck channel has not been setup");
   }
-}, options.wallCheckFrequency * minuteToMS);
+}, minuteToMS);
 
 setInterval(() => {
   if (!database.isShieldOn()) {
@@ -281,26 +287,14 @@ setInterval(() => {
       intervals.bufferCheckIntervals(bot, database, options, channel, embed);
     } else bot.chat("Error: Buffercheck channel has not been setup");
   }
-}, options.bufferCheckFrequency * minuteToMS + 5000);
+}, minuteToMS + 5000);
 
 setInterval(() => {
   const channel = client.channels.cache.find(
     (channel) => channel.id === database.getChannelID("ftop")
   );
   if (channel != undefined) {
-    let embed = new discord.MessageEmbed();
-    embed
-      .setTimestamp()
-      .setFooter(bot.username, options.url + bot.player.uuid);
-    const clientCommand = client.commands.get("ftop");
-    clientCommand.execute(bot, database, arguments, options, embed);
-    commandsExecuted = true;
-
-    wait(300).then(() => {
-      clientCommand.parseChat(commandsData, embed, database);
-      channel.send(embed);
-      clear();
-    });
+    channel.send(`${options.prefix}ftop`);
   } else {
     bot.chat("Error: FactionTop channel not setup");
   }
@@ -311,19 +305,7 @@ setInterval(() => {
     (channel) => channel.id === database.getChannelID("flist")
   );
   if (channel != undefined) {
-    let embed = new discord.MessageEmbed();
-    embed
-      .setTimestamp()
-      .setFooter(bot.username, options.url + bot.player.uuid);
-    const clientCommand = client.commands.get("flist");
-    clientCommand.execute(bot, database, arguments, options, embed);
-    commandsExecuted = true;
-
-    wait(300).then(() => {
-      embed.setDescription("```" + commandsData.join("\n") + "```");
-      channel.send(embed);
-      clear();
-    });
+    channel.send(`${options.prefix}flist`);
   } else {
     bot.chat("Error: FactionList channel not setup");
   }
