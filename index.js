@@ -42,7 +42,7 @@ function bindEvents(bot) {
     bot.settings.viewDistance = "tiny";
     bot.settings.colorsEnabled = true;
 
-    console.log(bot.username + " has connected to " + options.host);
+    console.log(bot.username + " has connected to " + options.serverIP);
     bot.chat(options.joinCommand);
   });
 

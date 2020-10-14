@@ -1,16 +1,18 @@
 # factionsBot
 
 # USAGE WARNING:
+
 You may modify these codes and add to it as you may like.
 However, you are not allowed to take this code and sell to others.
-Also since I have made this open source, please fork this source 
+Also since I have made this open source, please fork this source
 to show support. I ask nothing else than that. Thanks and enjoy the factions bot!
 
+# basic factions bot v.0.2 - Getting Started
 
-# basic factions bot v.0.2
-
-To get started first make sure to install these modules: nodejs, discordjs, node-fetch, and lowdb <br />
-create a config.json file in the utils folder (./utils/config.json) as a json object with the following:
+1. First off download NODEJS and install it: https://nodejs.org/en/
+2. Download this repository
+3. run > npm install (after nodejs is installed) (open cmd.exe -> cd into the factionsbot folder and then run the command)
+4. create a config.json file in the utils folder (./utils/config.json) as a json object with the following:
 
 ```json
 {
