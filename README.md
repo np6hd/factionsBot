@@ -12,7 +12,7 @@ Also since I have made this open source, please fork this source
 to show support. I ask nothing else than that. Thanks and enjoy the factions bot!
 
 # basic factions bot v.0.2 - Getting Started
-
+Testing releases right now, strongly advise this to follow, will add more updates later.
 1. First off download NODEJS and install it: https://nodejs.org/en/
 2. Download this repository or you can download the three things from the releases. (exe file, zip file and script.sh)
 3. After running the setup DO NOT Launch the app.
