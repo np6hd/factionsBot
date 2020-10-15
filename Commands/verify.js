@@ -11,7 +11,7 @@ module.exports = {
   usesShield: false,
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
-    if (message.channel.name != this.name) {
+    if (message.channel.id != database.getChannelID("verify")) {
       message.reply("Type this in the verify channel");
       return;
     }

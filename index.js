@@ -149,6 +149,7 @@ client.on("guildMemberRemove", (member) => {
 
 // Disallowed where you can run commands through direct messages of discord bot
 client.on("message", (message) => {
+
   if (message.channel.type == "dm") return;
 
   if (!message.content.startsWith(prefix)) return;
@@ -218,7 +219,7 @@ client.on("message", (message) => {
         return;
       }
     }
-
+    
     if (botRestarting) return;
     clientCommand.execute(
       bot,
