@@ -1,5 +1,9 @@
 # factionsBot
 
+# Virus Total Scan:
+
+https://www.virustotal.com/gui/file/9ab1fcc3f271526832d1d7f21bb981410fd5dc1e3bbd91e3b29c2c66efa787bb/detection
+
 # USAGE WARNING:
 
 You may modify these codes and add to it as you may like.
