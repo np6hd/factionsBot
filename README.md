@@ -2,7 +2,7 @@
 
 # Virus Total Scan:
 
-https://www.virustotal.com/gui/file/9ab1fcc3f271526832d1d7f21bb981410fd5dc1e3bbd91e3b29c2c66efa787bb/detection
+https://www.virustotal.com/gui/file/287edbd98cb13b3c872369f42fe1d36f436024734108a08ef04be2f7e14a1286/detection
 
 # USAGE WARNING:
 
