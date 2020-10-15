@@ -23,17 +23,17 @@ Testing releases right now, strongly advise this to follow, will add more update
 
 ```json
 {
-  serverIP: "vanitymc.co",
-  userMail: "random@gmail.com", "email and password are required only for"
-  password: "random123", "online-mode=true servers"
-  botToken: "NKsmdkqwiqwekwqekewqew.asda.qw.eqwe", "discord application token"
-  joinCommand: "/demonic", "first command bot types when logged in to the server"
-  wallCheckFrequency: 3, "how often walls should be checked in minutes"
-  bufferCheckFrequency: 6, "how often buffers should be checked in minutes"
-  joinCommandFrequency: 1, "how often join command be run in minutes"
-  prefix: ".", "how does bot recognize commands Ex: .help"
-  ftopFrequency: 30, "how often ftop should be calculated in minutes"
-  flistFrequency: 10, "how often should /f list command be exectued in minutes"
+  "serverIP": "vanitymc.co",
+  "userMail": "random@gmail.com", "email and password are required only for"
+  "password": "random123", "online-mode=true servers"
+  "botToken": "NKsmdkqwiqwekwqekewqew.asda.qw.eqwe", "discord application token"
+  "joinCommand": "/demonic", "first command bot types when logged in to the server"
+  "wallCheckFrequency": 3, "how often walls should be checked in minutes"
+  "bufferCheckFrequency": 6, "how often buffers should be checked in minutes"
+  "joinCommandFrequency": 1, "how often join command be run in minutes"
+  "prefix": ".", "how does bot recognize commands Ex: .help"
+  "ftopFrequency": 30, "how often ftop should be calculated in minutes"
+  "flistFrequency": 10, "how often should /f list command be exectued in minutes"
 }
 
 ```
