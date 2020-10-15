@@ -14,7 +14,5 @@ to show support. I ask nothing else than that. Thanks and enjoy the factions bot
 # basic factions bot v1.0 - Getting Started
 Testing releases right now, strongly advise this to follow, will add more updates later.
 1. First off download NODEJS and install it: https://nodejs.org/en/
-2. Download this repository or you can download the three things from the releases. (exe file, zip file and script.sh)
-3. After running the setup DO NOT Launch the app.
-4. First unzip the factionbot.zip file and move the factionbot folder and script.sh to (win-unpacked > resources)
-5. Now, you may run the exe file and fill out info.
+2. Download the release file and install
+3. Now, you may run the exe file and fill out info. Enjoy!
