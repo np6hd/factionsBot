@@ -49,7 +49,7 @@ function bindEvents(bot) {
   bot.on("message", (message) => {
     let chat = message.toString();
     if (chat.length < 1 || chat == undefined) return;
-    if(chat.includes("@everyone")) return;
+    if(chat.includes("@")) return;
     if (!commandsExecuted) serverChat.push(chat);
     else commandsData.push(chat);
     console.log(chat);
