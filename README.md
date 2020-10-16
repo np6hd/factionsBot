@@ -1,5 +1,5 @@
 # factionsBot
-
+# Licence MIT
 # basic factions bot v1.0 - Getting Started
 
 Testing releases right now, strongly advise this to follow, will add more updates later.
