@@ -1,19 +1,10 @@
 # factionsBot
 # Licence MIT
 # basic factions bot v1.0 - Getting Started
-
-Testing releases right now, strongly advise this to follow, will add more updates later.
-
-1. First off download NODEJS and install it: https://nodejs.org/en/
-2. Download the release file and install
-3. Now, you may run the exe file and fill out info. Enjoy!
-
-# If your running it on a container or terminal based OS:
-
-1. You still need nodejs
-2. npm install to download all the dependencies
-2. include a config.json on (factionsBot/utils/<config.json>) with the following: (case sensitive - type exactly as written)
-
+1. Download NodeJS and install it: https://nodejs.org/en/
+3. Download the repository -  https://github.com/np6hd/factionsBot
+2. run npm install (on the same folder with package.json) to download all the dependencies
+3. edit the config.json:
 ```json
 {
   "serverIP": "vanitymc.co",
@@ -30,6 +21,7 @@ Testing releases right now, strongly advise this to follow, will add more update
 }
 
 ```
+4. After info is filled out run run.bat
 
 
 # Virus Total Scan:
