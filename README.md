@@ -2,7 +2,8 @@
 # Licence MIT
 # basic factions bot v1.0 - Getting Started
 1. Download NodeJS and install it: https://nodejs.org/en/
-3. Download the repository -  https://github.com/np6hd/factionsBot
+3. Download the repository -  https://github.com/np6hd/factionsBot/releases/tag/v1.0
+4. unzip the file
 2. run npm install (on the same folder with package.json) to download all the dependencies
 3. edit the config.json:
 ```json
