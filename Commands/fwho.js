@@ -12,6 +12,6 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/f who " + arguments);
-    embed.setColor("#f93a2f").setTitle("Factions Who | " + options.serverIP);
+    embed.setColor("#f93a2f").setTitle("👥 Factions Who");
   },
 };

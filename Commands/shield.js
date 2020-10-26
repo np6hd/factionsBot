@@ -1,5 +1,3 @@
-let bold = "**";
-let embedWrapper = "```";
 module.exports = {
   name: "shield",
   description: "Turn on/off wall check operations",
@@ -12,33 +10,66 @@ module.exports = {
   usesShield: false,
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
+    let wallChannel = message.guild.channels.cache.find(
+      (ch) => ch.id === database.getChannelID("wallchecks")
+    );
+
+    let bufferChannel = message.guild.channels.cache.find(
+      (ch) => ch.id === database.getChannelID("bufferchecks")
+    );
+
+    let weeChannel = message.guild.channels.cache.find(
+      (ch) => ch.id === database.getChannelID("weewoo")
+    );
+
+    let toReturn = false;
+    let description = "";
+
+    if (wallChannel == undefined) {
+      description = "Wallchecks channel is not set up.\n";
+      toReturn = true;
+    }
+    if (bufferChannel == undefined) {
+      description += "Bufferchecks channel is not set up.\n";
+      toReturn = true;
+    }
+    if (weeChannel == undefined) {
+      description += "WeeWoo channel is not set up.\n";
+      toReturn = true;
+    }
+
+    if (toReturn) {
+      options.errorEmbed(embed, description);
+      return;
+    }
+
     if (arguments == "on") {
       if (database.isShieldOn()) {
-        embed.setColor("#f8c300").setDescription("⚠️ Shield is already turned on");
+        options.errorEmbed(embed, "Shield is already turned on.");
         return;
       }
-      embed
-        .setColor("#00d166")
-        .setDescription(
-          "✅ Shield is enabled, all wall check operations are halted"
-        );
+      options.successEmbed(
+        embed,
+        "Shield is enabled, all wall check operations are halted."
+      );
     } else if (arguments == "off") {
       if (!database.isShieldOn()) {
-        embed.setColor("#f8c300").setDescription("⚠️ Shield is already off");
+        options.errorEmbed(embed, "Shield is already off.");
         return;
       }
-      embed
-        .setColor("#fd0061")
-        .setDescription(
-          "⚠️ Shield is disabled, all wall check operations are resumed"
-        );
+      options.successEmbed(
+        embed,
+        "Shield is disabled, all wall check operations are resumed."
+      );
     } else {
-      let error = "⚠️ **Error** - `invalid arguments`\n\n";
-      error += `${bold}Syntax:${bold}${embedWrapper}${options.prefix}${this.name} ${this.arguments}${embedWrapper}\n`;
-      embed
-        .setColor("#f93a2f")
-        .setDescription(error)
-        .setFooter("<> = required, [] = optional");
+      options
+        .errorEmbed(
+          embed,
+          `${options.boldWrap("Syntax:") + options.tripleWrap(
+            options.prefix + this.name + " " + this.arguments + "\n"
+          )}`
+        )
+        embed.setFooter("<> = required, [] = optional");
       return;
     }
     database.toggleShield();

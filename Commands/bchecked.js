@@ -1,65 +1,114 @@
-const bold = "**";
 module.exports = {
   name: "bchecked",
   description:
     "If the user is verified, mark buffers checked or show cool down",
   checkArgs: false,
   arguments: "",
-  type: "ingame",
+  type: "both",
   category: "factions",
   usesChat: false,
   sendEmbed: false,
   usesShield: true,
   adminPerms: false,
-  execute(bot, database, arguments, options, client, username, embed) {
+  execute(
+    bot,
+    database,
+    arguments,
+    options,
+    embed,
+    message,
+    clientCommands,
+    client,
+    username
+  ) {
     const bufferCheckChannel = client.channels.cache.find(
       (channel) => channel.id === database.getChannelID("bufferchecks")
     );
 
     if (bufferCheckChannel == undefined) {
-      bot.chat("Error: Buffer check channel not setup");
+      if (message != "") {
+        options.errorEmbed(embed, "Bufferchecks channel is not setup.");
+        message.channel.send(embed);
+      }
+      bot.chat("Error: Bufferchecks channel is not setup.");
       return;
+    }
+
+    if (username == "") {
+      if (message.channel.id != database.getChannelID("bufferchecks")) {
+        options.errorEmbed(embed, "Type this in the Bufferchecks channel.");
+        message.channel.send(embed);
+        return;
+      }
+
+      username = database.getDiscordUserObject(message.author.tag).value();
+
+      if (username == undefined) {
+        options.errorEmbed(
+          embed,
+          "You have not verified yourself with the bot."
+        );
+        message.channel.send(embed);
+        return;
+      }
+
+      username = username.username;
+      
+      if (bot.players[username] == undefined) {
+        options.errorEmbed(
+          embed,
+          "You have to be online in game to run this command in discord."
+        );
+
+        message.channel.send(embed);
+        return;
+      }
     }
 
     let today = new Date();
     let currentTime = today.getTime();
-    const userWallObject = database
-      .getUserObject(username)
-      .get("userWallChecks");
 
-    embed.setColor("#00D166").setTitle("Buffer Check");
+    let userWallObject = database.getUserObject(username);
+
+    embed
+      .setColor("#00D166")
+      .setAuthor("✅ Buffer Check")
+      .setThumbnail(options.urls.uuid + bot.players[username].uuid);
+
+    userWallObject = userWallObject.get("userWallChecks");
+
+    const bufferCheckObject = database.getBufferChecksObject();
 
     const timeDifference = options.getDifference(
-      userWallObject.get("lastBufferChecked").value(),
-      today.getTime()
+      bufferCheckObject.get("lastBufferChecked").value(),
+      currentTime
     );
     if (timeDifference.minutes >= 1) {
       database.updateBufferChecked(userWallObject, currentTime);
       bot.chat(
-        "Buffers checked by " +
+        "Buffers: Checked by " +
           username +
-          ", with total: " +
+          ", who has total - " +
           userWallObject.get("bufferChecks").value() +
-          " buffer checks"
+          " buffer checks."
       );
-      let description = "Buffers have been checked by __" + username + "__\n";
-      description +=
-        bold +
-        username +
-        " checks: " +
-        bold +
-        userWallObject.get("bufferChecks").value() +
-        "\n";
-      embed.setDescription(description);
-      bufferCheckChannel.send(embed);
+      embed.addFields(
+        { name: "Buffers have been checked by:", value: username },
+        {
+          name: "Total Checks:",
+          value: userWallObject.get("bufferChecks").value(),
+        }
+      );
     } else {
-      let coolDown = 60 - timeDifference.seconds;
+      let coolDown = Math.abs(60 - timeDifference.seconds);
+      options.cooldownEmbed(
+        embed,
+        username + ", you are in a " + coolDown.toFixed(2) + " second cooldown."
+      );
       bot.chat(
-        username +
-          ", you are in (" +
-          coolDown.toFixed(2) +
-          ") seconds cooldown."
+        username + ", you are in a " + coolDown.toFixed(2) + " second cooldown."
       );
     }
+    bufferCheckChannel.send(embed);
   },
 };

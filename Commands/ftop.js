@@ -11,7 +11,7 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/f top");
-    embed.setColor("#a62019").setTitle("Factions Top | " + options.serverIP);
+    embed.setColor("#a62019").setAuthor("🏅 Factions Top");
   },
   parseChat(chatData, embed, database) {
     let currentFtop = [];

@@ -6,26 +6,24 @@ module.exports = (bot, database, options, channel, embed) => {
     wallObj.get("lastWallChecked").value(),
     today.getTime()
   );
-  if (timeDifference.minutes >= options.wallCheckFrequency) {
+  if (timeDifference.minutes >= database.getTime("auto_wallcheck")) {
     let time = "";
     Object.keys(timeDifference).forEach((key) => {
       if (timeDifference[key] != 0) {
-        if(key == "seconds") return
-        if (key == "minutes") time += timeDifference[key] + " " + key + ".";
+        if (key == "seconds") return;
+        if (key == "minutes") time += timeDifference[key] + " " + key + ". ";
         else time += timeDifference[key] + " " + key + " ";
       }
     });
     wallObj.update("wallMinuteUnchecked", (n) => (n = time)).write();
     bot.chat(
-      "Walls not checked for: " +
-        wallObj.get("wallMinuteUnchecked").value() +
-        `Check walls now and type (${options.prefix}checked) to clear it!`
+      "Walls: not checked for " +
+        time +
+        "Check walls now and type " +
+        options.prefix +
+        "checked to clear it!"
     );
-    embed.setDescription(
-      "⚠️ Walls have not been checked for __" +
-        wallObj.get("wallMinuteUnchecked").value() +
-        "__"
-    );
+    embed.setDescription("⚠️ Walls have not been checked for __" + time + "__");
     channel.send(embed);
   }
 };

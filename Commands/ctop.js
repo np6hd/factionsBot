@@ -1,4 +1,3 @@
-const bold = "**";
 module.exports = {
   name: "ctop",
   description: "Show the top wall checkers",
@@ -18,25 +17,26 @@ module.exports = {
       .getAllUsersObject()
       .orderBy("userWallChecks.wallChecks", "desc")
       .value();
+    if (usersObject.length == 0) {
+      options.errorEmbed(embed, "There is not enough user data.");
+      return;
+    }
     for (eachUser of usersObject) {
       users += `${count}. ${eachUser.username}\n`;
       wallChecks += `${eachUser.userWallChecks.wallChecks}\n`;
       count += 1;
     }
-    embed
-      .setColor("#f8c300")
-      .setTitle("Wall Check Top | " + options.serverIP)
-      .addFields(
-        {
-          name: "Top Wall Checkers",
-          value: users,
-          inline: true,
-        },
-        {
-          name: "Wall Checks",
-          value: wallChecks,
-          inline: true,
-        }
-      );
+    embed.setColor("#00C09A").setAuthor("🏅 Top Wall Checkers").addFields(
+      {
+        name: "Wall Checker",
+        value: users,
+        inline: true,
+      },
+      {
+        name: "Checks",
+        value: wallChecks,
+        inline: true,
+      }
+    );
   },
 };

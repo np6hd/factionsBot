@@ -1,0 +1,4 @@
+1. First install NODEJS: https://nodejs.org/en/
+1. Run INSTALL.bat
+2. Edit config.json
+3. Run RUN.bat
