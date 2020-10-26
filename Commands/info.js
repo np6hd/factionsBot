@@ -59,7 +59,9 @@ module.exports = {
                 }
               )
               .setDescription(description)
-              .setThumbnail(options.urls.uuid + bot.players[user].uuid);
+              .setThumbnail(
+                options.urls.uuid + bot.players[userObj.username].uuid
+              );
           } else {
             options.errorEmbed(embed, "User is not verified.");
           }
