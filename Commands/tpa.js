@@ -11,6 +11,6 @@ module.exports = {
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/tpa " + arguments);
-    embed.setColor("#cc7900").setTitle("Request to Teleport | " + options.host);
+    embed.setColor("#00d166").setAuthor("✅ Teleport Request");
   },
 };

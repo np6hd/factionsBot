@@ -11,6 +11,6 @@ module.exports = {
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/tpyes");
-    embed.setColor("#cc7900").setTitle("Accept Teleport Request | " + options.host);
+    embed.setColor("#00d166").setAuthor("✅ Accept Teleport Request");
   },
 };

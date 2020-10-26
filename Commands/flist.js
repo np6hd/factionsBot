@@ -11,6 +11,6 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/f list");
-    embed.setColor("#a652bb").setTitle("Factions List | " + options.serverIP);
+    embed.setColor("#a652bb").setAuthor("📄 Factions List");
   },
 };

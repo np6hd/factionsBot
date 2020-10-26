@@ -1,6 +1,6 @@
 module.exports = {
-  name: "restart",
-  description: "Restart the mineflayer bot",
+  name: "resetchannels",
+  description: "Reset channels, you need to setup the channels again",
   checkArgs: false,
   arguments: "",
   type: "discord",
@@ -10,10 +10,10 @@ module.exports = {
   usesShield: false,
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
+    database.resetChannels();
     options.successEmbed(
       embed,
-      "Bot is restarting, wait 10 seconds before executing any more commands."
+      "Channels have been reset, you need to setup channels again."
     );
-    bot.quit();
   },
 };

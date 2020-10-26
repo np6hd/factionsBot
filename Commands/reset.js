@@ -1,6 +1,6 @@
 module.exports = {
-  name: "resetdb",
-  description: "Reset the database for new map/season",
+  name: "reset",
+  description: "Reset everything for new map/season (channels are not reset)",
   checkArgs: false,
   arguments: "",
   type: "discord",
@@ -11,10 +11,9 @@ module.exports = {
   adminPerms: true,
   execute(bot, database, arguments, options, embed, message) {
     database.resetDatabase();
-    embed
-      .setColor("#a62019")
-      .setDescription(
-        "```Database has been reset, everyone needs to verify and channels need be setup again```"
-      );
+    options.successEmbed(
+      embed,
+      "Everything has been reset except for channels"
+    );
   },
 };

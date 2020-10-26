@@ -1,8 +1,8 @@
 module.exports = {
   name: "msg",
-  description: "Message a user with provided arguments",
+  description: "Directly message a user with provided message",
   checkArgs: true,
-  arguments: "<user> [message]",
+  arguments: "<user> <message>",
   type: "discord",
   category: "factions",
   usesChat: true,
@@ -11,6 +11,6 @@ module.exports = {
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
     bot.chat("/msg " + arguments);
-    embed.setColor("#59768d").setTitle("Message User | " + options.serverIP);
+    embed.setColor("#00D166").setAuthor("✅ Messaged User");
   },
 };

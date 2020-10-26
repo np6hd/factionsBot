@@ -1,6 +1,3 @@
-const bold = "**";
-let embedWrapper = "```";
-const underline = "__";
 module.exports = {
   name: "ingame",
   description: "Show Ingame Commands",
@@ -12,19 +9,36 @@ module.exports = {
   sendEmbed: true,
   usesShield: false,
   adminPerms: false,
-  execute(bot, database, arguments, options, embed, message, clientCommands) {
+  execute(
+    bot,
+    database,
+    arguments,
+    options,
+    embed,
+    message,
+    clientCommands,
+    client,
+    username
+  ) {
+    let info = options.boldWrap("Note:") + "```diff\n";
+    info +=
+      "- A user must be verified first\n" +
+      `- Type ${options.prefix}verify in the verify channel to get started\n` +
+      "- Some of the commands can be run in-game or in discord\n" +
+      "- But you must be online in game, to run ingame commands in discord\n";
+    info += "```\n";
     let ingameCommands = "";
-    ingameCommands += `**Info**: ${embedWrapper}A user must be verified first\nType ${options.prefix}verify in the #verify channel to get started ${embedWrapper}\n`;
     for (eachCommand of clientCommands) {
-      if (eachCommand[1].type === "ingame") {
+      if (eachCommand[1].type === "both") {
         ingameCommands +=
-          bold + options.prefix + eachCommand[1].name + bold + " - ";
-        ingameCommands += "`" + eachCommand[1].description + "`\n";
+          "🔹 " + `${options.boldWrap(eachCommand[1].name + ": ")}`;
+        ingameCommands +=
+          `${options.italicsWrap(eachCommand[1].description)}` + "\n";
       }
     }
     embed
       .setColor("#00c09a")
-      .setTitle("In Game Commands")
-      .setDescription(ingameCommands);
+      .setAuthor("🎮 In Game Commands")
+      .setDescription(info + ingameCommands);
   },
 };

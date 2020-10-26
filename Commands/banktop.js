@@ -1,40 +1,41 @@
 module.exports = {
-  name: "btop",
-  description: "Show the top buffer checkers",
+  name: "banktop",
+  description: "Track the top depositors in your faction",
   checkArgs: false,
-  type: "discord",
   arguments: "",
+  type: "discord",
   category: "factions",
   usesChat: false,
   sendEmbed: true,
   usesShield: false,
   adminPerms: false,
   execute(bot, database, arguments, options, embed, message) {
-    let users = "";
-    let bufferChecks = "";
-    let count = 1;
-    const usersObject = database
+    const allUsers = database
       .getAllUsersObject()
-      .orderBy("userWallChecks.bufferChecks", "desc")
+      .orderBy("balance", "desc")
       .value();
-    if (usersObject.length == 0) {
+    let users = "";
+    let moneyValue = "";
+    let count = 1;
+    if (allUsers.length == 0) {
       options.errorEmbed(embed, "There is not enough user data.");
       return;
     }
-    for (eachUser of usersObject) {
+    for (eachUser of allUsers) {
       users += `${count}. ${eachUser.username}\n`;
-      bufferChecks += `${eachUser.userWallChecks.bufferChecks}\n`;
+      moneyValue += `$${eachUser.balance.toLocaleString()}\n`;
       count += 1;
     }
-    embed.setColor("#00C09A").setAuthor("🏅 Top Buffer Checkers").addFields(
+
+    embed.setColor("#00C09A").setAuthor("💰 Top Depositors").addFields(
       {
-        name: "Buffer Checker",
+        name: "Depositors",
         value: users,
         inline: true,
       },
       {
-        name: "Checks",
-        value: bufferChecks,
+        name: "Balance",
+        value: moneyValue,
         inline: true,
       }
     );

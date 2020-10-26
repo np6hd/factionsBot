@@ -19,7 +19,6 @@ module.exports = {
       temporaryUser: [],
       prevFtop: [],
       channels: {
-        announcements: "",
         weewoo: "",
         wallchecks: "",
         bufferchecks: "",
@@ -27,7 +26,20 @@ module.exports = {
         ftop: "",
         flist: "",
         verify: "",
+        bank: "",
       },
+      times: {
+        auto_ftop: 30,
+        auto_flist: 10,
+        auto_wallcheck: 3,
+        auto_buffercheck: 6,
+        auto_joincommand: 1,
+        latency: 300,
+      },
+      commands: {
+        joinCommand: "/random",
+      },
+      trackMoney: false,
       shield: true,
       totalUsers: 0,
     }).write();
@@ -44,6 +56,9 @@ module.exports = {
           lastWallChecked: today.getTime(),
           lastBufferChecked: today.getTime(),
         },
+        deposits: 0,
+        withdraws: 0,
+        balance: 0,
       })
       .write();
     db.update("totalUsers", (n) => (n += 1)).write();
@@ -136,8 +151,10 @@ module.exports = {
   },
   resetDatabase() {
     const newState = {};
+    let oldChannels = db.get("channels").value();
     db.setState(newState).write();
     this.createDatabase();
+    db.update("channels", (ch) => (ch = oldChannels)).write();
   },
   resetTempUsers() {
     db.unset("temporaryUser").write();
@@ -152,5 +169,55 @@ module.exports = {
   },
   findFaction(factionName) {
     return db.get("prevFtop").find({ factionName: factionName });
+  },
+  updateDeposit(username, val) {
+    this.getUserObject(username)
+      .update("deposits", (oldval) => (oldval += val))
+      .write();
+    this.getUserObject(username)
+      .update("balance", (oldval) => (oldval += val))
+      .write();
+  },
+  updateWithdraw(username, val) {
+    this.getUserObject(username)
+      .update("withdraws", (oldval) => (oldval += val))
+      .write();
+    this.getUserObject(username)
+      .update("balance", (oldval) => (oldval -= val))
+      .write();
+  },
+  toggleTrackMoney() {
+    db.update("trackMoney", (b) => (b = !b)).write();
+  },
+  isTrackingMoney() {
+    return db.get("trackMoney").value();
+  },
+  setTime(timeName, time) {
+    db.update(`times.${timeName}`, (t) => (t = time)).write();
+  },
+  getTime(timeName) {
+    return db.get(`times.${timeName}`).value();
+  },
+  setCommand(command, str) {
+    db.update(`commands.${command}`, (newStr) => (newStr = str)).write();
+  },
+  getCommand(command) {
+    return db.get(`commands.${command}`).value();
+  },
+  resetChannels() {
+    db.update(
+      "channels",
+      (ch) =>
+        (ch = {
+          weewoo: "",
+          wallchecks: "",
+          bufferchecks: "",
+          serverchat: "",
+          ftop: "",
+          flist: "",
+          verify: "",
+          bank: "",
+        })
+    ).write();
   },
 };
