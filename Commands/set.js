@@ -195,10 +195,11 @@ module.exports = {
           message.channel.send(embed);
           return;
         } else {
-          database.setCommand(splitArgs[0], splitArgs[1]);
+          let fullCommand = arguments.substring(arguments.indexOf(splitArgs[1]));
+          database.setCommand(splitArgs[0], fullCommand);
           options.successEmbed(
             embed,
-            "Set " + splitArgs[0] + " to " + splitArgs[1] + " command"
+            "Set " + splitArgs[0] + " to " + fullCommand + " command"
           );
           embed.setTitle("Please restart the bot for commands to take effect");
         }

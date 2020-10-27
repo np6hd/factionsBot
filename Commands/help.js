@@ -104,28 +104,5 @@ module.exports = {
     let pages = [miscEmbed, adminEmbed, factionEmbed, ingameEmbed];
 
     pagination(message, pages);
-
-    // let helpCommands = "";
-    // let information =
-    //   "- First, set the joinCommand and then restart the bot\n" +
-    //   "- Commands cooldown has been set to 10 seconds for non-administrators\n" +
-    //   "- Non-admin users must be verified first before using other commands\n" +
-    //   "- Setup the channels first before turning off shield / wallcheck operations\n" +
-    //   "- Some commands require arguments, follow the syntax\n" +
-    //   "- Some commands can be run in discord or in game\n" +
-    //   "- But you must be online in game, to run ingame commands in discord\n";
-    // information =
-    //   `${options.boldWrap("Note:")}${"```diff\n" + information + "```"}` + "\n";
-
-    // for (eachCommand of clientCommands) {
-    //   if (eachCommand[1].category === "help") {
-    //     helpCommands += "🔹 " + options.boldWrap(eachCommand[1].name + ": ");
-    //     helpCommands += options.italicsWrap(eachCommand[1].description) + "\n";
-    //   }
-    // }
-    // embed
-    //   .setColor("#00c09a")
-    //   .setAuthor("🛈 Help Commands")
-    //   .setDescription(information + helpCommands);
   },
 };
