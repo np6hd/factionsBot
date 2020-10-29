@@ -64,7 +64,7 @@ const options = {
     return "||".concat(str).concat("||");
   },
   redWrap(str) {
-    return "```diff\n".concat(str).concat("\n```")
+    return "```diff\n".concat(str).concat("\n```");
   },
   orangeWrap(str) {
     return "```fix\n".concat(str).concat("\n```");
@@ -82,7 +82,10 @@ const options = {
       .setDescription(this.boldWrap(description));
   },
   errorEmbed(embed, description) {
-    embed.setColor("#f8c300").setAuthor("⚠️ Error").setDescription(this.boldWrap(description));
+    embed
+      .setColor("#f8c300")
+      .setAuthor("⚠️ Error")
+      .setDescription(this.boldWrap(description));
   },
   cooldownEmbed(embed, description) {
     embed

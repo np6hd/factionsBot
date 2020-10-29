@@ -76,12 +76,11 @@ module.exports = {
 
     userWallObject = userWallObject.get("userWallChecks");
 
-    const wallCheckObject = database.getWallChecksObject();
-
     const timeDifference = options.getDifference(
-      wallCheckObject.get("lastWallChecked").value(),
+      userWallObject.value().lastWallChecked,
       currentTime
     );
+
     if (timeDifference.minutes >= 1) {
       database.updateWallChecked(userWallObject, currentTime);
       bot.chat(

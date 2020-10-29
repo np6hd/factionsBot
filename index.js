@@ -208,9 +208,8 @@ client.on("message", (message) => {
     const clientCommand = client.commands.get(command);
 
     if (clientCommand.type == "ingame") {
-      message.channel.send(
-        options.errorEmbed(embed, "Run this command in game.")
-      );
+      options.errorEmbed(embed, "Run this command in game.");
+      message.channel.send(embed);
       return;
     }
 
@@ -219,11 +218,12 @@ client.on("message", (message) => {
         options.prefix + clientCommand.name + " " + clientCommand.arguments
       )}\n`;
       embed
-        .setColor("#f93a2f")
+        .setColor("#f8c300")
         .setAuthor("⚠️ Error")
         .setDescription(error)
         .setFooter("<> = required, [] = optional");
-      return message.channel.send(embed);
+      message.channel.send(embed);
+      return;
     }
 
     if (!message.member.hasPermission("ADMINISTRATOR")) {

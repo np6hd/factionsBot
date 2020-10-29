@@ -53,7 +53,7 @@ module.exports = {
       }
 
       username = username.username;
-      
+
       if (bot.players[username] == undefined) {
         options.errorEmbed(
           embed,
@@ -77,10 +77,8 @@ module.exports = {
 
     userWallObject = userWallObject.get("userWallChecks");
 
-    const bufferCheckObject = database.getBufferChecksObject();
-
     const timeDifference = options.getDifference(
-      bufferCheckObject.get("lastBufferChecked").value(),
+      userWallObject.value().lastBufferChecked,
       currentTime
     );
     if (timeDifference.minutes >= 1) {
