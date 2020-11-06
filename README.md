@@ -1,5 +1,4 @@
 # factionsBot
-# Licence MIT
 # basic factions bot v2.0 - Getting Started
 
 1. First off download NODEJS and install it: https://nodejs.org/en/
