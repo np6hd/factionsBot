@@ -34,6 +34,8 @@ module.exports = {
         auto_wallcheck: 3,
         auto_buffercheck: 6,
         auto_joincommand: 1,
+        ping_walls_unchecked_after: 5,
+        ping_buffers_unchecked_after: 5, 
         latency: 300,
       },
       commands: {
