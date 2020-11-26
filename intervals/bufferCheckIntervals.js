@@ -26,6 +26,8 @@ module.exports = (bot, database, options, channel, embed) => {
     embed.setDescription(
       "⚠️ Buffers have not been checked for __" + time + "__"
     );
-    channel.send(embed);
+    channel.send(embed).then(() => {
+      if(timeDifference.minutes >= database.getTime("ping_buffers_unchecked_after")) channel.send("@everyone").then(msg => msg.delete());
+    });
   }
 };

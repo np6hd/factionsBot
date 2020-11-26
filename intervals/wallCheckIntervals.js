@@ -24,6 +24,8 @@ module.exports = (bot, database, options, channel, embed) => {
         "checked to clear it!"
     );
     embed.setDescription("⚠️ Walls have not been checked for __" + time + "__");
-    channel.send(embed);
+    channel.send(embed).then(() => {
+      if(timeDifference.minutes >= database.getTime("ping_walls_unchecked_after")) channel.send("@everyone").then(msg => msg.delete());
+    });
   }
 };

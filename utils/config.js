@@ -33,6 +33,8 @@ const options = {
     "auto_wallcheck",
     "auto_buffercheck",
     "auto_joincommand",
+    "ping_walls_unchecked_after",
+    "ping_buffers_unchecked_after",
     "latency",
   ],
   wait: (time) => new Promise((resolve) => setTimeout(resolve, time)),
